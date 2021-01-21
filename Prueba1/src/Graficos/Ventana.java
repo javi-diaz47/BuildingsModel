@@ -4,15 +4,23 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 public class Ventana extends javax.swing.JFrame {
 //Atributos generales
     int [] x = new int[100]; 
     int [] y = new int[100]; 
-    int r = 50; 
+    int r = 30; 
     int indicador = 0; 
     int contador = 0; 
+    boolean Nodob = false; 
+    boolean Moverb = false; 
+    boolean Lineab = false; 
     /**
      * Creates new form Ventana
      */
@@ -36,8 +44,9 @@ public class Ventana extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         Nodo = new javax.swing.JButton();
         Mover = new javax.swing.JButton();
-        mostrar = new javax.swing.JButton();
         Linea = new javax.swing.JButton();
+        Eliminar = new javax.swing.JButton();
+        mostrar = new javax.swing.JButton();
         PanelLinea = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         Texto = new javax.swing.JTextArea();
@@ -62,7 +71,7 @@ public class Ventana extends javax.swing.JFrame {
         );
         PanelpLayout.setVerticalGroup(
             PanelpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 271, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         Nodo.setText("Nodo");
@@ -79,17 +88,24 @@ public class Ventana extends javax.swing.JFrame {
             }
         });
 
-        mostrar.setText("Mostrar");
-        mostrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mostrarActionPerformed(evt);
-            }
-        });
-
         Linea.setText("Arista");
         Linea.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 LineaActionPerformed(evt);
+            }
+        });
+
+        Eliminar.setText("Eliminar");
+        Eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EliminarActionPerformed(evt);
+            }
+        });
+
+        mostrar.setText("Mostrar");
+        mostrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mostrarActionPerformed(evt);
             }
         });
 
@@ -104,19 +120,22 @@ public class Ventana extends javax.swing.JFrame {
                 .addComponent(Mover)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Linea)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Eliminar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 127, Short.MAX_VALUE)
                 .addComponent(mostrar)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Nodo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(mostrar, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(Mover, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Linea, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 12, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Nodo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Mover, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Linea, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(mostrar)
+                    .addComponent(Eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         PanelLinea.setBackground(new java.awt.Color(204, 204, 204));
@@ -132,13 +151,14 @@ public class Ventana extends javax.swing.JFrame {
             PanelLineaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelLineaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         PanelLineaLayout.setVerticalGroup(
             PanelLineaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelLineaLayout.createSequentialGroup()
-                .addComponent(jScrollPane1)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelLineaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 481, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -172,7 +192,12 @@ public class Ventana extends javax.swing.JFrame {
         jMenu1.add(SaveModel);
 
         CloseApp.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        CloseApp.setText("Clase app");
+        CloseApp.setText("Close app");
+        CloseApp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CloseAppActionPerformed(evt);
+            }
+        });
         jMenu1.add(CloseApp);
 
         jMenuBar1.add(jMenu1);
@@ -193,19 +218,19 @@ public class Ventana extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Panelp, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(Panelp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(PanelLinea, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(38, 38, 38)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(PanelLinea, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(Panelp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -216,11 +241,18 @@ public class Ventana extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void NodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NodoActionPerformed
-       Raton();  
+        Nodob = true;
+        Lineab = false; 
+        Moverb = false;
+        Raton(); 
+        
     }//GEN-LAST:event_NodoActionPerformed
 
     private void MoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MoverActionPerformed
         // TODO add your handling code here:
+        Moverb = true;
+        Nodob = false;
+        Lineab = false;
         arrastrarNodo(); 
     }//GEN-LAST:event_MoverActionPerformed
 
@@ -234,18 +266,24 @@ public class Ventana extends javax.swing.JFrame {
 
     private void LineaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LineaActionPerformed
         // TODO add your handling code here:
+        Lineab = true; 
+        Nodob = false; 
+        Moverb = false; 
         CrearLinea(); 
+        
     }//GEN-LAST:event_LineaActionPerformed
 
     private void SaveModelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveModelActionPerformed
         // TODO add your handling code here:
         SaveModel save = new SaveModel(); 
-        save.Save(this.x, this.y);
+        save.Save(this.x, this.y, this.contador);
     }//GEN-LAST:event_SaveModelActionPerformed
 
     private void NewModelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewModelActionPerformed
         // TODO add your handling code here:
         System.out.println("Control + n");
+        NewModel V2 = new NewModel(); 
+        V2.NewModel();
     }//GEN-LAST:event_NewModelActionPerformed
 
     private void AboutUsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AboutUsActionPerformed
@@ -268,6 +306,9 @@ public class Ventana extends javax.swing.JFrame {
             try {
                 // What to do with the file, e.g. display it in a TextArea
                 Texto.read( new FileReader( file.getAbsolutePath() ), null );
+                
+                Load(file);
+                
             } catch (Exception ex) {
                 System.out.println("problem accessing file"+file.getAbsolutePath());
             }
@@ -275,6 +316,16 @@ public class Ventana extends javax.swing.JFrame {
         System.out.println("File access cancelled by user.");
         }
     }//GEN-LAST:event_OpenModelActionPerformed
+
+    private void CloseAppActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CloseAppActionPerformed
+        // TODO add your handling code here:
+        System.exit(0); 
+    }//GEN-LAST:event_CloseAppActionPerformed
+
+    private void EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarActionPerformed
+        // TODO add your handling code here:
+         
+    }//GEN-LAST:event_EliminarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -314,6 +365,7 @@ public class Ventana extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu AboutUs;
     private javax.swing.JMenuItem CloseApp;
+    private javax.swing.JButton Eliminar;
     private javax.swing.JButton Linea;
     private javax.swing.JButton Mover;
     private javax.swing.JMenuItem NewModel;
@@ -338,6 +390,9 @@ public class Ventana extends javax.swing.JFrame {
         oyente = new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                if(Moverb == true || Lineab == true){
+                   Panelp.removeMouseListener(this); 
+                }
                 int getX = e.getX(); 
                 int getY = e.getY();
                 contar(e.getX(), e.getY()); 
@@ -345,6 +400,7 @@ public class Ventana extends javax.swing.JFrame {
                 Nodo n = new Nodo(); 
                 n.Circulo(Panelp.getGraphics(), getX, getY, r, r);
                 System.out.println("x " + e.getX() + " y " + e.getY());
+                
             }
 
             @Override
@@ -364,6 +420,7 @@ public class Ventana extends javax.swing.JFrame {
             }
         };
         Panelp.addMouseListener(oyente);
+        //Panelp.get
     }
     
    //Metodo EstaDentro
@@ -396,6 +453,10 @@ public class Ventana extends javax.swing.JFrame {
              
              @Override
              public void mouseDragged(MouseEvent e) {
+                  if(Nodob == true || Lineab == true){
+                   Panelp.removeMouseMotionListener(this);
+                   //Panelp.removeMouseListener(this);
+                }
                  // Si comienza el arrastre ...
                 if (!arrastrando)
                 {
@@ -429,6 +490,9 @@ public class Ventana extends javax.swing.JFrame {
 
              @Override
              public void mouseMoved(MouseEvent e) {
+                  if(Nodob == true || Lineab == true){
+                   Panelp.removeMouseMotionListener(this);
+                }
                  arrastrando = false;
                  Nodo repintar = new Nodo();
                  for (int i = 0; i < contador; i++) {
@@ -436,6 +500,7 @@ public class Ventana extends javax.swing.JFrame {
                          repintar.Circulo(Panelp.getGraphics(), x[i], y[i], r, r);
                      
                  }
+                
              }
          }; 
          Panelp.addMouseMotionListener(arrastrar);
@@ -443,6 +508,7 @@ public class Ventana extends javax.swing.JFrame {
      
      public void CrearLinea(){
          MouseListener linea = new MouseListener() {
+             
              @Override
              public void mouseClicked(MouseEvent e) {
              }
@@ -461,6 +527,9 @@ public class Ventana extends javax.swing.JFrame {
 
              @Override
              public void mouseReleased(MouseEvent e) {
+                 if(Moverb == true || Nodob == true){
+                   Panelp.removeMouseListener(this); 
+                  }
                  //LlegadaX = 0; 
                  //LlegadaY = 0;
                  LlegadaX = e.getX(); 
@@ -468,6 +537,7 @@ public class Ventana extends javax.swing.JFrame {
                  
                  Nodo l = new Nodo(); 
                  l.Linea(Panelp.getGraphics(), inicioX, inicioY, LlegadaX, LlegadaY);
+                 
              }
 
              @Override
@@ -480,4 +550,50 @@ public class Ventana extends javax.swing.JFrame {
          }; 
          Panelp.addMouseListener(linea);
      }
+     
+     
+     //Cargando un Modelo
+     public void Load(File file){
+         
+
+        int cont = 0; 
+        Scanner scan;
+        try {
+            
+            scan = new Scanner(file);
+            
+            while(scan.hasNextLine()){
+             String data = scan.nextLine();
+
+             String[] properties = data.split(";");
+             
+             if(properties[0].equals("Node")){
+                
+                
+                int getX = Integer.parseInt(properties[1]);
+                int getY = Integer.parseInt(properties[2]);
+                x[cont] = Integer.parseInt(properties[1]);
+                y[cont] = Integer.parseInt(properties[2]);
+                
+                Nodo n = new Nodo(); 
+                n.Circulo(Panelp.getGraphics(), getX, getY, r, r);
+                //repaint();
+                 System.out.println("Done!");
+                cont += 1; 
+             }
+             this.contador = cont;
+            
+            }   
+            
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         
+             
+             
+        
+         
+         
+     }
+     
 }

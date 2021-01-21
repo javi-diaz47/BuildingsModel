@@ -17,7 +17,7 @@ import javax.swing.JFileChooser;
  * @author edalr
  */
 public class SaveModel {
-    public void Save(int[]x, int[]y){
+    public void Save(int[]x, int[]y, int contador){
         
         File dir = new File("Building-Models");
             
@@ -32,7 +32,10 @@ public class SaveModel {
         File file = new File(saveAs.getSelectedFile() + ".txt");
         try{
              BufferedWriter output = new BufferedWriter(new FileWriter(file));
-             output.write("Hello World!");
+            for (int i = 0; i < contador; i++) {
+               output.write("Node;" + x[i] + ";" + y[i] + ";\n"); 
+            }
+             
              output.close();
         }catch(Exception e){
 
