@@ -255,6 +255,13 @@ public class Ventana extends javax.swing.JFrame {
 
     private void OpenModelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenModelActionPerformed
         // TODO add your handling code here:
+        File dir = new File("Building-Models");
+            
+        if(!dir.exists()){
+            dir.mkdir();
+        }
+        
+        jFileChooser1.setCurrentDirectory(dir);
         int returnVal = jFileChooser1.showOpenDialog(this);
         if (returnVal == jFileChooser1.APPROVE_OPTION) {
             File file = jFileChooser1.getSelectedFile();
@@ -408,7 +415,9 @@ public class Ventana extends javax.swing.JFrame {
                    // coordenadas del rectángulo
                    x[indicador] = (x[indicador] + e.getX()) - xAnteriorRaton;
                    y[indicador] = (y[indicador] + e.getY()) - yAnteriorRaton;
-
+                   
+                   repaint();
+                   
                    // Se guarda la posición del ratón para el siguiente cálculo
                    xAnteriorRaton = e.getX();
                    yAnteriorRaton = e.getY();

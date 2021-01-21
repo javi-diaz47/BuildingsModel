@@ -8,6 +8,7 @@ package Graficos;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.File;
 import java.io.IOException;
 import javax.swing.JFileChooser;
 
@@ -17,20 +18,14 @@ import javax.swing.JFileChooser;
  */
 public class SaveModel {
     public void Save(int[]x, int[]y){
-       /* try {
-            File myObj = new File("filename.txt");
-        if (myObj.createNewFile()) {
-            System.out.println("File created: " + myObj.getName());
-        } else {
-            System.out.println("File already exists.");
+        
+        File dir = new File("Building-Models");
+            
+        if(!dir.exists()){
+            dir.mkdir();
         }
-      } catch (IOException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        }
-    }
-    */
-        JFileChooser saveAs = new JFileChooser();
+       
+        JFileChooser saveAs = new JFileChooser("./" + dir);
         saveAs.setApproveButtonText("Guardar");
         saveAs.showSaveDialog(null);
 
