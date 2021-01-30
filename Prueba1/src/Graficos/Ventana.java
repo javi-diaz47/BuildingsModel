@@ -6,16 +6,21 @@ import java.awt.event.MouseMotionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.graalvm.compiler.phases.common.NodeCounterPhase.Stage;
 
 
 public class Ventana extends javax.swing.JFrame {
 //Atributos generales
+    //DEfinicion de ArrayList
+    ArrayList<Nodo> ArregloNodo = new ArrayList(); 
+
     int [] x = new int[100]; 
     int [] y = new int[100]; 
-    int r = 30; 
+    int r = 40; 
     int indicador = 0; 
     int contador = 0; 
     boolean Nodob = false; 
@@ -25,8 +30,10 @@ public class Ventana extends javax.swing.JFrame {
      * Creates new form Ventana
      */
     public Ventana() {
-        initComponents(); 
-        setLocationRelativeTo(null);
+        initComponents(); //Carga los elementos del jpanel
+        setLocationRelativeTo(null);//Pone en el medio de la pantalla la 
+        //this.setUndecorated(true);
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
     /**
@@ -259,8 +266,8 @@ public class Ventana extends javax.swing.JFrame {
     private void mostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarActionPerformed
         // TODO add your handling code here:
         System.out.println("\n");
-        for (int i = 0; i < contador; i++) {
-            System.out.println(x[i] + " " + y[i]);
+        for (int i = 0; i < ArregloNodo.size(); i++) {
+            System.out.println("[" + ArregloNodo.get(i).getX + "] [" + ArregloNodo.get(i).getY + "]");
         }
     }//GEN-LAST:event_mostrarActionPerformed
 
@@ -276,7 +283,7 @@ public class Ventana extends javax.swing.JFrame {
     private void SaveModelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveModelActionPerformed
         // TODO add your handling code here:
         SaveModel save = new SaveModel(); 
-        save.Save(this.x, this.y, this.contador);
+        save.Save(this.ArregloNodo, this.contador);
     }//GEN-LAST:event_SaveModelActionPerformed
 
     private void NewModelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewModelActionPerformed
@@ -319,7 +326,9 @@ public class Ventana extends javax.swing.JFrame {
 
     private void CloseAppActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CloseAppActionPerformed
         // TODO add your handling code here:
-        System.exit(0); 
+        //System.exit(0);
+        dispose(); 
+        
     }//GEN-LAST:event_CloseAppActionPerformed
 
     private void EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarActionPerformed
@@ -393,14 +402,48 @@ public class Ventana extends javax.swing.JFrame {
                 if(Moverb == true || Lineab == true){
                    Panelp.removeMouseListener(this); 
                 }
-                int getX = e.getX(); 
-                int getY = e.getY();
-                contar(e.getX(), e.getY()); 
+                int getX = e.getX() - 20; 
+                int getY = e.getY() - 20;
+                //contar(e.getX(), e.getY()); 
                 //int r = 30; 
-                Nodo n = new Nodo(); 
-                n.Circulo(Panelp.getGraphics(), getX, getY, r, r);
-                System.out.println("x " + e.getX() + " y " + e.getY());
                 
+                boolean isAlreadyNode = false;
+                int tmp = ArregloNodo.size();
+               
+                if(tmp < 1){
+                    tmp = 1;
+                }
+                
+                for (int i = 0; i < ArregloNodo.size(); i++) {
+                    //System.out.println("Hey, aca estamos");
+                    System.out.println("ArrX range: (" + (ArregloNodo.get(i).getX - r - 5) + " - " + (ArregloNodo.get(i).getX + r - 5) + ")\n evX: " + getX);
+                    if( (getX >= ArregloNodo.get(i).getX - r - 5) && (getX <= ArregloNodo.get(i).getX + r - 5) && (getY >= ArregloNodo.get(i).getY - r - 5) && (getY <= ArregloNodo.get(i).getY + r - 5) ){
+                        System.out.println("Compa no se puede...!");
+                        isAlreadyNode = true;
+                        break;
+                    } 
+                }
+   
+                if(!isAlreadyNode){   
+                    Nodo n = new Nodo(); 
+                    n.Circulo(Panelp.getGraphics(), getX, getY, r, r);
+                    if(ArregloNodo.contains(n)){
+                        ArregloNodo.remove(ArregloNodo.size()); 
+                        System.out.println("Lo detecté...!");
+                    }
+                    System.out.println("x " + e.getX() + " y " + e.getY());
+                    //ArregloNodo.setGetX(getX,); 
+                    n.setGetX(getX);
+                    n.setGetY(getY);
+                    ArregloNodo.add(n); 
+                    //System.out.println(ArregloNodo); 
+                    for (Nodo nodo : ArregloNodo) {
+                        System.out.println("getX: " + nodo.getX + " getY: " + nodo.getY);
+                    }
+                    System.out.println("Contador: -> " + ArregloNodo.size());
+                    
+                }      
+          
             }
 
             @Override
@@ -425,14 +468,13 @@ public class Ventana extends javax.swing.JFrame {
     
    //Metodo EstaDentro
    public boolean EstaDentro(MouseEvent e){
-       for(int i = 0; i < contador; i++){
-           if((e.getX() > x[i]) &&(e.getX() < (x[i] + r)) &&(e.getY() > y[i]) && (e.getY() < (y[i] + r))){
+       for(int i = 0; i < ArregloNodo.size(); i++){
+           if((e.getX() > ArregloNodo.get(i).getX) &&(e.getX() < (ArregloNodo.get(i).getX + r)) &&(e.getY() > ArregloNodo.get(i).getY) && (e.getY() < (ArregloNodo.get(i).getY + r))){
                indicador = i; 
                break; 
            }
        }
-       
-        if ((e.getX() > x[indicador]) &&(e.getX() < (x[indicador] + r)) &&(e.getY() > y[indicador]) && (e.getY() < (y[indicador] + r))){
+        if ((e.getX() > ArregloNodo.get(indicador).getX) &&(e.getX() < (ArregloNodo.get(indicador).getX + r)) &&(e.getY() > ArregloNodo.get(indicador).getY) && (e.getY() < (ArregloNodo.get(indicador).getY + r))){
              return true;
         }
        return false;
@@ -474,10 +516,14 @@ public class Ventana extends javax.swing.JFrame {
                 {   
                    // Si ya había empezado el arrastre, se calculan las nuevas
                    // coordenadas del rectángulo
-                   x[indicador] = (x[indicador] + e.getX()) - xAnteriorRaton;
-                   y[indicador] = (y[indicador] + e.getY()) - yAnteriorRaton;
+                   int nuevaX = (ArregloNodo.get(indicador).getX + e.getX()) - xAnteriorRaton;
+                   int nuevaY = (ArregloNodo.get(indicador).getY + e.getY()) - yAnteriorRaton;
                    
-                   repaint();
+                   ArregloNodo.get(indicador).setGetX(nuevaX);
+                   ArregloNodo.get(indicador).setGetY(nuevaY);
+                   
+                   
+                  // repaint();
                    
                    // Se guarda la posición del ratón para el siguiente cálculo
                    xAnteriorRaton = e.getX();
@@ -495,12 +541,10 @@ public class Ventana extends javax.swing.JFrame {
                 }
                  arrastrando = false;
                  Nodo repintar = new Nodo();
-                 for (int i = 0; i < contador; i++) {
-                     
-                         repintar.Circulo(Panelp.getGraphics(), x[i], y[i], r, r);
-                     
+                 
+                 for (Nodo nodo : ArregloNodo) {
+                     repintar.Circulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r);
                  }
-                
              }
          }; 
          Panelp.addMouseMotionListener(arrastrar);
@@ -536,7 +580,7 @@ public class Ventana extends javax.swing.JFrame {
                  LlegadaY = e.getY(); 
                  
                  Nodo l = new Nodo(); 
-                 l.Linea(Panelp.getGraphics(), inicioX, inicioY, LlegadaX, LlegadaY);
+                 l.Linea(Panelp.getGraphics(), inicioX, inicioY, LlegadaX, LlegadaY, ArregloNodo, r);
                  
              }
 
@@ -570,13 +614,20 @@ public class Ventana extends javax.swing.JFrame {
              if(properties[0].equals("Node")){
                 
                 
-                int getX = Integer.parseInt(properties[1]);
+                int getX= Integer.parseInt(properties[1]);
                 int getY = Integer.parseInt(properties[2]);
                 x[cont] = Integer.parseInt(properties[1]);
                 y[cont] = Integer.parseInt(properties[2]);
-                
+               
                 Nodo n = new Nodo(); 
                 n.Circulo(Panelp.getGraphics(), getX, getY, r, r);
+                n.setGetX(getX);
+                n.setGetY(getY);
+                ArregloNodo.add(n);
+                
+                for (Nodo nodo : ArregloNodo) {
+                    System.out.println("getX: " + nodo.getX + " getY: " + nodo.getY);
+                }
                 //repaint();
                  System.out.println("Done!");
                 cont += 1; 
@@ -588,12 +639,27 @@ public class Ventana extends javax.swing.JFrame {
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
         }
-         
-             
-             
-        
-         
-         
+          
      }
+ 
+     public static <T> ArrayList<T> removeDuplicates(ArrayList<T> list){ 
+        
+        // Create a new ArrayList 
+        ArrayList<T> newList = new ArrayList<T>(); 
+  
+        // Traverse through the first list 
+        for (T element : list) { 
+            
+            // If this element is not present in newList 
+            // then add it 
+            if (!newList.contains(element)) { 
+  
+                newList.add(element); 
+            } 
+        } 
+  
+        // return the new list 
+        return newList; 
+    } 
      
 }

@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.swing.JFileChooser;
 
 /**
@@ -17,7 +18,7 @@ import javax.swing.JFileChooser;
  * @author edalr
  */
 public class SaveModel {
-    public void Save(int[]x, int[]y, int contador){
+    public void Save(ArrayList<Nodo> ArregloNodo, int contador){
         
         File dir = new File("Building-Models");
             
@@ -32,10 +33,9 @@ public class SaveModel {
         File file = new File(saveAs.getSelectedFile() + ".txt");
         try{
              BufferedWriter output = new BufferedWriter(new FileWriter(file));
-            for (int i = 0; i < contador; i++) {
-               output.write("Node;" + x[i] + ";" + y[i] + ";\n"); 
+            for (Nodo nodo : ArregloNodo) {
+                output.write("Node;" + nodo.getX + ";" + nodo.getY + "\n");
             }
-             
              output.close();
         }catch(Exception e){
 

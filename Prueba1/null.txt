@@ -1,1 +1,9 @@
-Node: x=73; y=54Node: x=338; y=97Node: x=153; y=182
+Node;54;215
+Node;211;379
+Node;410;204
+Node;221;51
+Node;42;64
+Node;47;362
+Node;223;202
+Node;402;44
+Node;425;373
