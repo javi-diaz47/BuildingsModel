@@ -18,7 +18,7 @@ import javax.swing.JFileChooser;
  * @author edalr
  */
 public class SaveModel {
-    public void Save(ArrayList<Nodo> ArregloNodo, int contador){
+    public void Save(ArrayList<Nodo> ArregloNodo, int contador, ArrayList<Linea> ArregloLinea){
         
         File dir = new File("Building-Models");
             
@@ -34,8 +34,12 @@ public class SaveModel {
         try{
              BufferedWriter output = new BufferedWriter(new FileWriter(file));
             for (Nodo nodo : ArregloNodo) {
-                output.write("Node;" + nodo.getX + ";" + nodo.getY + "\n");
+                output.write("Node;" + nodo.getX + ";" + nodo.getY + ";" + nodo.id + "\n");
             }
+            for (Linea linea : ArregloLinea) {
+                output.write("Line;" + linea.inicio + ";" + linea.end + "\n");
+            }
+            //output.write("Counter:" + contador + "\n");
              output.close();
         }catch(Exception e){
 

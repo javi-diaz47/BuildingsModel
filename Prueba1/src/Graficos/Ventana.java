@@ -1,5 +1,8 @@
 package Graficos;
 
+import java.awt.AWTException;
+import java.awt.Color;
+import java.awt.Robot;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -10,22 +13,29 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.graalvm.compiler.phases.common.NodeCounterPhase.Stage;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
+//import org.graalvm.compiler.phases.common.NodeCounterPhase.Stage;
 
 
 public class Ventana extends javax.swing.JFrame {
 //Atributos generales
     //DEfinicion de ArrayList
-    ArrayList<Nodo> ArregloNodo = new ArrayList(); 
+    ArrayList<Nodo> ArregloNodo = new ArrayList();
+    ArrayList<Linea> ArregloLinea = new ArrayList();
+    ArrayList<JLabel> ArregloJLabel = new ArrayList();
 
     int [] x = new int[100]; 
     int [] y = new int[100]; 
     int r = 40; 
     int indicador = 0; 
-    int contador = 0; 
+    int contador = 1; 
     boolean Nodob = false; 
     boolean Moverb = false; 
     boolean Lineab = false; 
+    boolean delete = false; 
+    
     /**
      * Creates new form Ventana
      */
@@ -34,6 +44,7 @@ public class Ventana extends javax.swing.JFrame {
         setLocationRelativeTo(null);//Pone en el medio de la pantalla la 
         //this.setUndecorated(true);
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setResizable(false);
     }
 
     /**
@@ -74,11 +85,11 @@ public class Ventana extends javax.swing.JFrame {
         Panelp.setLayout(PanelpLayout);
         PanelpLayout.setHorizontalGroup(
             PanelpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 496, Short.MAX_VALUE)
+            .addGap(0, 832, Short.MAX_VALUE)
         );
         PanelpLayout.setVerticalGroup(
             PanelpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 488, Short.MAX_VALUE)
         );
 
         Nodo.setText("Nodo");
@@ -156,16 +167,16 @@ public class Ventana extends javax.swing.JFrame {
         PanelLinea.setLayout(PanelLineaLayout);
         PanelLineaLayout.setHorizontalGroup(
             PanelLineaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelLineaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelLineaLayout.createSequentialGroup()
+                .addContainerGap(34, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31))
         );
         PanelLineaLayout.setVerticalGroup(
             PanelLineaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelLineaLayout.createSequentialGroup()
+            .addGroup(PanelLineaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 481, Short.MAX_VALUE)
+                .addComponent(jScrollPane1)
                 .addContainerGap())
         );
 
@@ -226,9 +237,9 @@ public class Ventana extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(Panelp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(PanelLinea, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(59, 59, 59)
+                .addComponent(PanelLinea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(21, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
@@ -240,7 +251,9 @@ public class Ventana extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(PanelLinea, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Panelp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(Panelp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 17, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -251,6 +264,7 @@ public class Ventana extends javax.swing.JFrame {
         Nodob = true;
         Lineab = false; 
         Moverb = false;
+        delete =  false; 
         Raton(); 
         
     }//GEN-LAST:event_NodoActionPerformed
@@ -260,6 +274,7 @@ public class Ventana extends javax.swing.JFrame {
         Moverb = true;
         Nodob = false;
         Lineab = false;
+        delete =  false;
         arrastrarNodo(); 
     }//GEN-LAST:event_MoverActionPerformed
 
@@ -276,6 +291,7 @@ public class Ventana extends javax.swing.JFrame {
         Lineab = true; 
         Nodob = false; 
         Moverb = false; 
+        delete =  false;
         CrearLinea(); 
         
     }//GEN-LAST:event_LineaActionPerformed
@@ -283,7 +299,7 @@ public class Ventana extends javax.swing.JFrame {
     private void SaveModelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveModelActionPerformed
         // TODO add your handling code here:
         SaveModel save = new SaveModel(); 
-        save.Save(this.ArregloNodo, this.contador);
+        save.Save(this.ArregloNodo, this.contador, this.ArregloLinea);
     }//GEN-LAST:event_SaveModelActionPerformed
 
     private void NewModelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewModelActionPerformed
@@ -300,6 +316,8 @@ public class Ventana extends javax.swing.JFrame {
 
     private void OpenModelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenModelActionPerformed
         // TODO add your handling code here:
+        //NewModel V2 = new NewModel(); 
+        //V2.NewModel();
         File dir = new File("Building-Models");
             
         if(!dir.exists()){
@@ -333,7 +351,14 @@ public class Ventana extends javax.swing.JFrame {
 
     private void EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarActionPerformed
         // TODO add your handling code here:
-         
+        Lineab = false; 
+        Nodob = false; 
+        Moverb = false; 
+        delete =  true;
+        DeleteNode();
+        //DeleteNode();
+       // Pintador_Emergencia();
+        //VenidAPorMi
     }//GEN-LAST:event_EliminarActionPerformed
 
     /**
@@ -399,12 +424,12 @@ public class Ventana extends javax.swing.JFrame {
         oyente = new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if(Moverb == true || Lineab == true){
+                
+                if(Moverb == true || Lineab == true || delete == true){
                    Panelp.removeMouseListener(this); 
                 }
                 int getX = e.getX() - 20; 
                 int getY = e.getY() - 20;
-                //contar(e.getX(), e.getY()); 
                 //int r = 30; 
                 
                 boolean isAlreadyNode = false;
@@ -431,14 +456,28 @@ public class Ventana extends javax.swing.JFrame {
                         ArregloNodo.remove(ArregloNodo.size()); 
                         System.out.println("Lo detecté...!");
                     }
+                   
                     System.out.println("x " + e.getX() + " y " + e.getY());
                     //ArregloNodo.setGetX(getX,); 
                     n.setGetX(getX);
                     n.setGetY(getY);
-                    ArregloNodo.add(n); 
+                    n.setId(contador);
+                    ArregloNodo.add(n);
+                    Panelp.setLayout(null);
+                    JLabel label = new JLabel("q", SwingConstants.CENTER);
+                    label.setText(String.valueOf(contador));
+                    Panelp.add(label);
+                    label.setBackground(Color.yellow);
+                    //label.setColor(Color.yellow);
+                    label.setOpaque(true);
+                    label.setBounds(e.getX()-12, e.getY()-12, 25,25);
+                    //label.setVerticalAlignment(SwingConstants.CENTER);
+                    ArregloJLabel.add(label);
+                    contador++; 
                     //System.out.println(ArregloNodo); 
                     for (Nodo nodo : ArregloNodo) {
-                        System.out.println("getX: " + nodo.getX + " getY: " + nodo.getY);
+                        System.out.println("getX: " + nodo.getX + " getY: " + nodo.getY  +  " id: [" + nodo.id + "]");
+                        
                     }
                     System.out.println("Contador: -> " + ArregloNodo.size());
                     
@@ -478,14 +517,7 @@ public class Ventana extends javax.swing.JFrame {
              return true;
         }
        return false;
-    }
-    
-   //Metodo Contar
-     public void contar(int x1, int y1){
-         x[contador] = x1;
-         y[contador] = y1;
-         contador += 1; 
-     }
+   }
      
      public void arrastrarNodo(){
          MouseMotionListener arrastrar = new MouseMotionListener() {
@@ -495,7 +527,7 @@ public class Ventana extends javax.swing.JFrame {
              
              @Override
              public void mouseDragged(MouseEvent e) {
-                  if(Nodob == true || Lineab == true){
+                  if(Nodob == true || Lineab == true || delete == true){
                    Panelp.removeMouseMotionListener(this);
                    //Panelp.removeMouseListener(this);
                 }
@@ -528,26 +560,47 @@ public class Ventana extends javax.swing.JFrame {
                    // Se guarda la posición del ratón para el siguiente cálculo
                    xAnteriorRaton = e.getX();
                    yAnteriorRaton = e.getY();
+                    
 
                    // y se manda repintar el Canvas
                   repaint();
+                  
                 }
              }
 
              @Override
              public void mouseMoved(MouseEvent e) {
-                  if(Nodob == true || Lineab == true){
+                if(Nodob == true || Lineab == true || delete == true){
                    Panelp.removeMouseMotionListener(this);
                 }
                  arrastrando = false;
-                 Nodo repintar = new Nodo();
+                 Nodo repintarNodo = new Nodo();
+//                 Linea repintarLinea = new Linea();
                  
-                 for (Nodo nodo : ArregloNodo) {
-                     repintar.Circulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r);
+                 for (Linea linea : ArregloLinea) {
+                     linea.LineaId(Panelp.getGraphics(), linea.id1, linea.id2, ArregloNodo, r);
+                     System.out.println("ID1: " + linea.id1 + "\t ID2: " + linea.id2);
                  }
+                 
+//                 for (int i = 0; i < ArregloLinea.size(); i++) {
+//                    repintarLinea.LineaId(Panelp.getGraphics(), repintarLinea.inicio, repintarLinea.end, ArregloNodo, r);
+//
+//                    System.out.println("ArregloLinea "+ i);
+//                 }
+//              
+                
+                 
+               
+                  
+                 for (Nodo nodo : ArregloNodo) {
+                    // System.out.println("Nodo ID: " + nodo.id);
+                     repintarNodo.Circulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r);
+                 }
+                
              }
          }; 
          Panelp.addMouseMotionListener(arrastrar);
+         //Pintador_Emergencia();
      }
      
      public void CrearLinea(){
@@ -571,16 +624,15 @@ public class Ventana extends javax.swing.JFrame {
 
              @Override
              public void mouseReleased(MouseEvent e) {
-                 if(Moverb == true || Nodob == true){
+                 if(Moverb == true || Nodob == true || delete == true){
                    Panelp.removeMouseListener(this); 
                   }
                  //LlegadaX = 0; 
                  //LlegadaY = 0;
                  LlegadaX = e.getX(); 
-                 LlegadaY = e.getY(); 
-                 
-                 Nodo l = new Nodo(); 
-                 l.Linea(Panelp.getGraphics(), inicioX, inicioY, LlegadaX, LlegadaY, ArregloNodo, r);
+                 LlegadaY = e.getY();
+                 Linea l = new Linea(); 
+                 l.Linea(Panelp.getGraphics(), inicioX, inicioY, LlegadaX, LlegadaY, ArregloNodo, r, ArregloLinea, l);
                  
              }
 
@@ -599,7 +651,6 @@ public class Ventana extends javax.swing.JFrame {
      //Cargando un Modelo
      public void Load(File file){
          
-
         int cont = 0; 
         Scanner scan;
         try {
@@ -616,6 +667,7 @@ public class Ventana extends javax.swing.JFrame {
                 
                 int getX= Integer.parseInt(properties[1]);
                 int getY = Integer.parseInt(properties[2]);
+                int Id = Integer.parseInt(properties[3]);
                 x[cont] = Integer.parseInt(properties[1]);
                 y[cont] = Integer.parseInt(properties[2]);
                
@@ -623,43 +675,211 @@ public class Ventana extends javax.swing.JFrame {
                 n.Circulo(Panelp.getGraphics(), getX, getY, r, r);
                 n.setGetX(getX);
                 n.setGetY(getY);
+                n.setId(Id);
                 ArregloNodo.add(n);
                 
                 for (Nodo nodo : ArregloNodo) {
                     System.out.println("getX: " + nodo.getX + " getY: " + nodo.getY);
                 }
                 //repaint();
-                 System.out.println("Done!");
+                 System.out.println("Node Done!");
                 cont += 1; 
              }
-             this.contador = cont;
+             
+             if(properties[0].equals("Line")){
+                int getId1 = Integer.parseInt(properties[1]);
+                int getId2 = Integer.parseInt(properties[2]);
+         
+               
+                System.out.println("Id1: " + getId1);
+                System.out.println("Id2: " + getId2);
+                Linea l = new Linea(); 
+                l.setInicio(getId1);
+                l.setEnd(getId2);
+                l.id1 = getId1;
+                l.id2 = getId2;
+                
+                ArregloLinea.add(l);
+                
+                for (Nodo nodo : ArregloNodo) {
+                    System.out.println("getX: " + nodo.getX + " getY: " + nodo.getY);
+                }
+                //repaint();
+                 System.out.println("Line Done!");
             
-            }   
+               // cont += 1; 
+             }
+             
+             //if(properties[0].equals("counter")){
+                 
+                 //int contadorDelModelo = Integer.parseInt(properties[1]);
+                 System.out.println("ArregloLinea.size() = " + ArregloLinea.size());
+                 this.contador =  ArregloNodo.size()+1;
+            // }
+                 for (Linea linea : ArregloLinea) {
+                     linea.LineaId(Panelp.getGraphics(), linea.id1, linea.id2, ArregloNodo, r);
+                     System.out.println("ID1: " + linea.id1 + "\t ID2: " + linea.id2);
+                 }
+             //this.contador = cont;
+             
+            
+            } 
+          
+                 
             
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
         }
           
      }
- 
-     public static <T> ArrayList<T> removeDuplicates(ArrayList<T> list){ 
-        
-        // Create a new ArrayList 
-        ArrayList<T> newList = new ArrayList<T>(); 
-  
-        // Traverse through the first list 
-        for (T element : list) { 
-            
-            // If this element is not present in newList 
-            // then add it 
-            if (!newList.contains(element)) { 
-  
-                newList.add(element); 
-            } 
-        } 
-  
-        // return the new list 
-        return newList; 
-    } 
      
+     public void DeleteNode(){
+        MouseListener Delete = new MouseListener() {
+           @Override
+           public void mouseClicked(MouseEvent e) {
+                if(Moverb == true || Nodob == true || Lineab == true){
+                    Panelp.removeMouseListener(this); 
+                }
+                
+                System.out.println("Estoy en eliminar..!");
+                int getX = e.getX();
+                int getY = e.getY(); 
+
+                int tmp = ArregloNodo.size();
+                int deleteNode = -1;
+                if(tmp > 0){
+                    
+                    for (int i = 0; i < tmp; i++) {
+                      //System.out.println("Hey, aca estamos");
+                     // System.out.println("ArrX range: (" + (ArregloNodo.get(i).getX - r - 5) + " - " + (ArregloNodo.get(i).getX + r - 5) + ")\n evX: " + getX);
+                      if( (getX >= ArregloNodo.get(i).getX - r - 5) && (getX <= ArregloNodo.get(i).getX + r - 5) && (getY >= ArregloNodo.get(i).getY - r - 5) && (getY <= ArregloNodo.get(i).getY + r - 5) ){
+                          System.out.println("Compa se eliminó...!");
+                          
+                          lastMoveX = ArregloNodo.get(i).getX + 5;
+                          lastMoveY = ArregloNodo.get(i).getY + 5;
+                          
+                          deleteNode = ArregloNodo.get(i).id; 
+                          ArregloNodo.remove(i); 
+                          //Label label = new Label();
+                          //label.DeleteLabel(Panelp, ArregloJLabel, i);
+                          //repaint(); 
+                          
+                          
+                          break;
+                        } 
+                      
+                    }
+                    System.out.println("BORRANDO LINEA");
+                    System.out.println("BEFORE - ArregloLinea.size() = " + ArregloLinea.size());
+                    final int a = deleteNode;
+                    ArregloLinea.removeIf(l -> l.id1 ==  a || l.id2 == a);
+                    System.out.println("AFTER - ArregloLinea.size() = " + ArregloLinea.size());
+                    
+                    System.out.println("\nBORRANDO LINEA");
+                    System.out.println("BEFORE - ArregloLinea.size() = " + ArregloLinea.size());
+                    ArregloLinea.removeIf(l -> l.id1 ==  a || l.id2 == a);
+                    System.out.println("AFTER - ArregloLinea.size() = " + ArregloLinea.size());
+//             
+//                    
+//                    Label label = new Label();
+//                    for (int i = 0; i < ArregloJLabel.size(); i++) {
+//                        label.CreateLabel(ArregloNodo.get(i).getX, ArregloNodo.get(i).getY, "", ArregloNodo, ArregloJLabel, Panelp, i-1); 
+//                    }
+                    System.out.println("So far so good");
+                    
+                    if(deleteNode > -1){
+                        Panelp.removeAll();
+                        Panelp.repaint();
+                        //Panelp.repaint();
+                        //Pintador_Emergencia();
+                       /* System.out.println("La wea ya esta");
+                        
+                        System.out.println("repaint after de Pin_Emer");
+                        Panelp.repaint(); // solo agarra este pero le da flojera pintar
+                        Panelp.removeMouseListener(this);// compi repaint no espere mas, Pinte!
+                        Panelp.repaint();// Esta bien ya 
+                        */
+                       
+                               
+                        hack();
+                         //Label label = new Label();
+                        //for (int i = 0; i < ArregloJLabel.size(); i++) {
+//                            label.CreateLabel(ArregloNodo.get(i).getX, ArregloNodo.get(i).getY, "", ArregloNodo, ArregloJLabel, Panelp, i); 
+//                        }
+                    }
+                    
+            
+                }
+
+             
+           }
+
+           @Override
+           public void mousePressed(MouseEvent e) {
+           }
+
+           @Override
+           public void mouseReleased(MouseEvent e) {
+           }
+
+           @Override
+           public void mouseEntered(MouseEvent e) {
+           }
+
+           @Override
+           public void mouseExited(MouseEvent e) {
+               
+           }
+       }; 
+       Panelp.addMouseListener(Delete);
+     }
+  
+    public void hack(){
+         MouseMotionListener arrashack = new MouseMotionListener() {
+             @Override
+             public void mouseDragged(MouseEvent e) {}
+             
+             @Override
+             public void mouseMoved(MouseEvent e) {
+                if(Nodob == true || Lineab == true || Moverb == true){
+                   Panelp.removeMouseMotionListener(this);
+                } 
+                 Nodo repintarNodo = new Nodo();
+                 for (Nodo nodo : ArregloNodo) {
+                     repintarNodo.Circulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r);
+                 }
+                
+                for (Linea linea : ArregloLinea) {
+                     linea.LineaId(Panelp.getGraphics(), linea.id1, linea.id2, ArregloNodo, r);
+                     System.out.println("ID1: " + linea.id1 + "\t ID2: " + linea.id2);
+                 }
+                 
+                
+                 System.out.println("Repintante liniesita!");
+//                for (Linea linea : ArregloLinea) {
+//                      repintarLinea.LineaId(Panelp.getGraphics(), linea.getInicio(), linea.getEnd(), ArregloNodo, r);
+//                }
+                 
+             }
+         }; 
+         Panelp.addMouseMotionListener(arrashack);
+         try {
+            Robot robot = new Robot();
+
+            // Move mouse cursor to 200, 200
+
+            // Press the mouse button #1.
+            robot.mouseMove(200, 200);
+
+            // Scroll the screen up for a mouse with a wheel support.
+            robot.mouseWheel(-100);
+        } catch (AWTException e) {
+            e.printStackTrace();
+        }
+      }
+    
+    int lastMoveX = 0;
+    int lastMoveY = 0;
+    
 }
+

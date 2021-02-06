@@ -1,0 +1,10 @@
+Node;192;59;1
+Node;96;146;2
+Node;239;148;3
+Node;467;141;4
+Node;152;255;6
+Line;1;2
+Line;1;3
+Line;3;4
+Line;2;6
+Line;6;4
