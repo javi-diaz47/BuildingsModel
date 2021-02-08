@@ -14,6 +14,7 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
@@ -466,8 +467,14 @@ public class Ventana extends javax.swing.JFrame {
             Nodo n = new Nodo();
             n.setCminimo(TextLabel);
             n.setCmaximo(CmaximoText);
-            ArregloNodo.get(ThisLabel).setCminimo(TextLabel);
             ArregloNodo.get(ThisLabel).setCmaximo(CmaximoText);
+            
+            if(Integer.valueOf(CmaximoText) < Integer.valueOf(TextLabel)){
+                alert("La capacidad minima no puede exceder a la capacidad maxima");
+            }else{
+                ArregloNodo.get(ThisLabel).setCminimo(TextLabel);
+            }
+            
             System.out.println("ThisLabel -> " + ThisLabel);
             ArregloJLabel.get(ThisLabel).setText(TextLabel);
             System.out.println("TextLabel = " + TextLabel);
@@ -1074,6 +1081,10 @@ public class Ventana extends javax.swing.JFrame {
     int lastMoveX = 0;
     int lastMoveY = 0;
     
+    private void alert(String s){
+        JOptionPane.showMessageDialog(null, s);
+    }
+    
     public void hack_2(){
          MouseMotionListener arrashack = new MouseMotionListener() {
              @Override
@@ -1081,6 +1092,7 @@ public class Ventana extends javax.swing.JFrame {
              
              @Override
              public void mouseMoved(MouseEvent e) {
+                 
                 if(Nodob == true || Lineab == true || Moverb == true || Editar == true){
                    Panelp.removeMouseMotionListener(this);
                 } 
