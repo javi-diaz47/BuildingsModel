@@ -6,10 +6,13 @@
 package Graficos;
 
 import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  *
@@ -21,7 +24,7 @@ public class Linea {
     int end = 0; 
     int id1 = 0; 
     int id2 = 0; 
-    public void Linea(Graphics g, int x, int y, int x1, int y1, ArrayList<Nodo> ArregloNodo, int r, ArrayList<Linea> ArregloLinea, Linea l){
+    public void Linea(Graphics g, int x, int y, int x1, int y1, ArrayList<Nodo> ArregloNodo, int r, ArrayList<Linea> ArregloLinea, Linea l, ArrayList<JLabel> ArregloJLabel, JPanel Panelp){
         //g.drawLine(x, y, x1, y2);
         //r = 100;
         int[] are_two_nodes = new int[2];
@@ -69,9 +72,25 @@ public class Linea {
                         System.out.println("Id1: " + id1 + " Id2: " + id2);
                         System.out.println("Numero de lienas: " + ArregloLinea.size());
                         
+                        //REpintando nodos
                         for(Nodo nodo: ArregloNodo){
-                            nodo.Circulo(g, nodo.getX, nodo.getY, r, r);
+                            if(Integer.valueOf(nodo.Cmaximo) >= 100) {
+                                nodo.Rectangulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r,Color.blue);
+                            }else if(Integer.valueOf(nodo.Cminimo) > 0){ 
+                                nodo.Circulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r,Color.red);
+                            }else{
+                                nodo.Circulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r,Color.yellow);
+                            }
+                            //nodo.Circulo(g, nodo.getX, nodo.getY, r, r,Color.yellow);
                         }  
+                        
+                        //REpintando labels
+                        System.out.println("ArregloJLabel.size(): [" + ArregloJLabel.size() + "]");
+                        Label label = new Label(); 
+                        for (int j = 0; j < ArregloJLabel.size(); j++) {
+                           int aux = Integer.valueOf(ArregloNodo.get(j).getCminimo());
+                           label.CreateLabel(Panelp, ArregloJLabel, aux, ArregloNodo.get(j).getX, ArregloNodo.get(j).getY, "", ArregloNodo); 
+                        }
                     }
                     break;
                 } 
@@ -85,14 +104,14 @@ public class Linea {
         Graphics2D g2 = (Graphics2D) g;
         g2.setStroke(new BasicStroke(3));
         
-        for (Nodo nodo1 : ArregloNodo) {
+        WeaNodo: for (Nodo nodo1 : ArregloNodo) {
             
             if(nodo1.id == id1){
                 for (Nodo nodo2 : ArregloNodo) {
                     if(nodo2.id == id2){
                         
                         g2.draw(new Line2D.Float(nodo1.getX+21, nodo1.getY+21, nodo2.getX+21, nodo2.getY+21));                 
-                        
+                        break WeaNodo;
                     }
                     
                 }
@@ -102,7 +121,14 @@ public class Linea {
         
         
         for(Nodo nodo: ArregloNodo){
-            nodo.Circulo(g, nodo.getX, nodo.getY, r, r);
+            if(Integer.valueOf(nodo.Cmaximo) >= 100) {
+                nodo.Rectangulo(g, nodo.getX, nodo.getY, r, r,Color.blue);
+             }else if(Integer.valueOf(nodo.Cminimo) > 0){ 
+                nodo.Circulo(g, nodo.getX, nodo.getY, r, r,Color.red);
+             }else{
+                 nodo.Circulo(g, nodo.getX, nodo.getY, r, r,Color.yellow);
+             }
+                     
         }  
     }
     public int getInicio() {

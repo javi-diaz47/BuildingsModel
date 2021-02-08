@@ -12,13 +12,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 
 /**
  *
  * @author edalr
  */
 public class SaveModel {
-    public void Save(ArrayList<Nodo> ArregloNodo, int contador, ArrayList<Linea> ArregloLinea){
+    public void Save(ArrayList<Nodo> ArregloNodo, int contador, ArrayList<Linea> ArregloLinea, ArrayList<JLabel> ArregloJLabel){
         
         File dir = new File("Building-Models");
             
@@ -33,13 +34,15 @@ public class SaveModel {
         File file = new File(saveAs.getSelectedFile() + ".txt");
         try{
              BufferedWriter output = new BufferedWriter(new FileWriter(file));
-            for (Nodo nodo : ArregloNodo) {
-                output.write("Node;" + nodo.getX + ";" + nodo.getY + ";" + nodo.id + "\n");
+            
+             for (Nodo nodo : ArregloNodo) {
+                output.write("Node;" + nodo.getX + ";" + nodo.getY + ";" + nodo.id + ";" + nodo.Cminimo + "\n");
             }
+            
             for (Linea linea : ArregloLinea) {
                 output.write("Line;" + linea.inicio + ";" + linea.end + "\n");
             }
-            //output.write("Counter:" + contador + "\n");
+           
              output.close();
         }catch(Exception e){
 

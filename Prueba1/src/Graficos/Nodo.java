@@ -23,15 +23,17 @@ public class Nodo {
     int getX = 0; 
     int getY = 0; 
     int id = 0; 
-    public void Circulo(Graphics g, int x, int y, int x1, int y1){
-        g.setColor(Color.YELLOW);
+    Color color;
+    String Cminimo = "0";
+    String Cmaximo = "0";
+    
+    public void Circulo(Graphics g, int x, int y, int x1, int y1, Color color){
+        g.setColor(color);
         g.fillOval(x, y, y1, y1);
-        
-        
     }
     
-    public void Rectangulo(Graphics g, int x, int y, int x1, int x2){
-        //g.getColor(Color.BLUE);
+    public void Rectangulo(Graphics g, int x, int y, int x1, int x2, Color color){
+        g.setColor(color);
         g.fillRect(x, y, x1, x2);
   
     }
@@ -58,6 +60,30 @@ public class Nodo {
     
     public int getId(){
         return id;
+    }
+
+    public String getCminimo() {
+        return Cminimo;
+    }
+
+    public void setCminimo(String Cminimo) {
+        this.Cminimo = Cminimo;
+    }
+
+    public String getCmaximo() {
+        return Cmaximo;
+    }
+
+    public void setCmaximo(String Cmaximo) {
+        this.Cmaximo = Cmaximo;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
     }
 
     

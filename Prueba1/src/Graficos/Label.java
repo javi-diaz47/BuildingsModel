@@ -6,7 +6,6 @@
 package Graficos;
 
 import java.awt.Color;
-import java.awt.Container;
 import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -14,76 +13,42 @@ import javax.swing.SwingConstants;
 
 /**
  *
- * @author edalr
+ * @author FELIX M. MARRUGO
  */
-public class Label extends JLabel{
-    public int x;
-    public int y;
+public class Label {
+    int id = -1;
     String text;
-    
-    public void CreateLabel(int x, int y, String text, ArrayList<Nodo>ArregloNodo,  ArrayList<JLabel>ArregloJLabel,JPanel Panelp, int id){
-        System.out.println("Estoy en Label");
-        this.x = x;
-        this.y = y;
-        this.text = text;
-        int r = 40;
+    public void CreateLabel(JPanel Panelp, ArrayList<JLabel>ArregloJLabel, int id, int x, int y, String text, ArrayList<Nodo> ArregloNodo){
         Panelp.setLayout(null);
-        JLabel label = new JLabel("q", SwingConstants.CENTER);
-        label.setText(String.valueOf(ArregloNodo.get(id).id));
-        Panelp.add(label);
-        label.setBackground(Color.yellow);
-        //label.setColor(Color.yellow);
-        label.setOpaque(true);
+        JLabel label = new JLabel("", SwingConstants.CENTER);
+        if(text.equals("")){
+            label.setText("[0,0]");
+        }else{
+            
+        for (Nodo nodo : ArregloNodo) {
+            if(nodo.id == id){
+                
+                this.text = "["+nodo.Cminimo+"," + nodo.Cmaximo +"]";
+                label.setText(this.text);
+                break;
+            }
+            
+        }
         
-        /* Aqui hay un error */
-        label.setBounds(ArregloNodo.get(id).getX-12, ArregloNodo.get(id).getY-12, 25,25);
-        System.out.println("Vamos bien");
-        //label.setVerticalAlignment(SwingConstants.CENTER);
-        ArregloJLabel.add(label);
-        //Panelp.removeAll();
-        //repaint();
-        Nodo n = new Nodo();
-        System.out.println("ArregloNodo.size() en el label = " + ArregloNodo.size());
-        for (int i = 0; i <= ArregloNodo.size(); i++) {
-            System.out.println("Repintando nodos en Label \n");
-            n.Circulo(Panelp.getGraphics(), ArregloNodo.get(i).getX, ArregloNodo.get(i).getX, r, r);            
+        Panelp.add(label);
+        label.setBackground(Color.white);
+        label.setOpaque(true);
+        label.setBounds(x+6, y-20, 50,15);
         }
     }
-    
-    public void DeleteLabel(JPanel Panelp, ArrayList<JLabel>ArregloJLabel, int IdNodo){
-        
-        Container parent = ArregloJLabel.get(IdNodo).getParent();
-        parent.remove(ArregloJLabel.get(IdNodo));
-        parent.validate();
-        parent.repaint();
-        
-        ArregloJLabel.remove(IdNodo);
 
-        
+    public int getId() {
+        return id;
     }
 
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
+    public void setId(int id) {
+        this.id = id;
+       // text = String.valueOf(id);
     }
     
     

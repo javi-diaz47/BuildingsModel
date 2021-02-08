@@ -14,6 +14,7 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 //import org.graalvm.compiler.phases.common.NodeCounterPhase.Stage;
@@ -31,10 +32,12 @@ public class Ventana extends javax.swing.JFrame {
     int r = 40; 
     int indicador = 0; 
     int contador = 1; 
+    int ThisLabel = 0;
     boolean Nodob = false; 
     boolean Moverb = false; 
     boolean Lineab = false; 
     boolean delete = false; 
+    boolean Editar = false;
     
     /**
      * Creates new form Ventana
@@ -58,16 +61,22 @@ public class Ventana extends javax.swing.JFrame {
 
         jPopupMenu1 = new javax.swing.JPopupMenu();
         jFileChooser1 = new javax.swing.JFileChooser();
-        Panelp = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         Nodo = new javax.swing.JButton();
         Mover = new javax.swing.JButton();
         Linea = new javax.swing.JButton();
         Eliminar = new javax.swing.JButton();
-        mostrar = new javax.swing.JButton();
+        Edit = new javax.swing.JButton();
+        Panelp = new javax.swing.JPanel();
         PanelLinea = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         Texto = new javax.swing.JTextArea();
+        Id = new javax.swing.JLabel();
+        Text = new javax.swing.JTextField();
+        Update = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        Cmaximo = new javax.swing.JTextField();
+        mostrar = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         NewModel = new javax.swing.JMenuItem();
@@ -78,19 +87,6 @@ public class Ventana extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Grafos");
-
-        Panelp.setBackground(new java.awt.Color(204, 204, 204));
-
-        javax.swing.GroupLayout PanelpLayout = new javax.swing.GroupLayout(Panelp);
-        Panelp.setLayout(PanelpLayout);
-        PanelpLayout.setHorizontalGroup(
-            PanelpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 832, Short.MAX_VALUE)
-        );
-        PanelpLayout.setVerticalGroup(
-            PanelpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 488, Short.MAX_VALUE)
-        );
 
         Nodo.setText("Nodo");
         Nodo.addActionListener(new java.awt.event.ActionListener() {
@@ -120,6 +116,90 @@ public class Ventana extends javax.swing.JFrame {
             }
         });
 
+        Edit.setText("Editar");
+        Edit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EditActionPerformed(evt);
+            }
+        });
+
+        Panelp.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout PanelpLayout = new javax.swing.GroupLayout(Panelp);
+        Panelp.setLayout(PanelpLayout);
+        PanelpLayout.setHorizontalGroup(
+            PanelpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        PanelpLayout.setVerticalGroup(
+            PanelpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        PanelLinea.setBackground(new java.awt.Color(255, 255, 255));
+        PanelLinea.setForeground(new java.awt.Color(204, 204, 204));
+
+        Texto.setColumns(20);
+        Texto.setRows(5);
+        jScrollPane1.setViewportView(Texto);
+
+        Id.setText("C minima");
+
+        Text.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TextActionPerformed(evt);
+            }
+        });
+
+        Update.setText("Update");
+        Update.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UpdateActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("C Maxima");
+
+        javax.swing.GroupLayout PanelLineaLayout = new javax.swing.GroupLayout(PanelLinea);
+        PanelLinea.setLayout(PanelLineaLayout);
+        PanelLineaLayout.setHorizontalGroup(
+            PanelLineaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelLineaLayout.createSequentialGroup()
+                .addGap(0, 64, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(57, 57, 57))
+            .addGroup(PanelLineaLayout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addGroup(PanelLineaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Update, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelLineaLayout.createSequentialGroup()
+                        .addGroup(PanelLineaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Id, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(PanelLineaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(Text, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
+                            .addComponent(Cmaximo))))
+                .addGap(15, 15, 15))
+        );
+        PanelLineaLayout.setVerticalGroup(
+            PanelLineaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelLineaLayout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addGroup(PanelLineaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Text, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Id))
+                .addGap(18, 18, 18)
+                .addGroup(PanelLineaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(Cmaximo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addComponent(Update)
+                .addGap(59, 59, 59)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(82, 82, 82))
+        );
+
         mostrar.setText("Mostrar");
         mostrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -133,51 +213,43 @@ public class Ventana extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(Nodo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Mover)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Linea)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Eliminar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 127, Short.MAX_VALUE)
-                .addComponent(mostrar)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(Nodo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Mover)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Linea)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Eliminar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Edit, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 329, Short.MAX_VALUE)
+                        .addComponent(mostrar))
+                    .addComponent(Panelp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(PanelLinea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 12, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Nodo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Mover, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Linea, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(mostrar)
-                    .addComponent(Eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        );
-
-        PanelLinea.setBackground(new java.awt.Color(204, 204, 204));
-        PanelLinea.setForeground(new java.awt.Color(204, 204, 204));
-
-        Texto.setColumns(20);
-        Texto.setRows(5);
-        jScrollPane1.setViewportView(Texto);
-
-        javax.swing.GroupLayout PanelLineaLayout = new javax.swing.GroupLayout(PanelLinea);
-        PanelLinea.setLayout(PanelLineaLayout);
-        PanelLineaLayout.setHorizontalGroup(
-            PanelLineaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelLineaLayout.createSequentialGroup()
-                .addContainerGap(34, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31))
-        );
-        PanelLineaLayout.setVerticalGroup(
-            PanelLineaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelLineaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(Nodo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Mover, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Linea, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(Edit, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(mostrar)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Panelp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(PanelLinea, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(14, 14, 14))))
         );
 
         jMenu1.setText("File");
@@ -235,26 +307,15 @@ public class Ventana extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(Panelp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(59, 59, 59)
-                .addComponent(PanelLinea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(21, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(PanelLinea, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(Panelp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 17, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -266,7 +327,12 @@ public class Ventana extends javax.swing.JFrame {
         Moverb = false;
         delete =  false; 
         Raton(); 
-        
+        Mover.setEnabled(true);
+        Eliminar.setEnabled(true);
+        Nodo.setEnabled(false);
+        Linea.setEnabled(true);
+        Edit.setEnabled(true);
+        Update.setEnabled(false);
     }//GEN-LAST:event_NodoActionPerformed
 
     private void MoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MoverActionPerformed
@@ -275,7 +341,15 @@ public class Ventana extends javax.swing.JFrame {
         Nodob = false;
         Lineab = false;
         delete =  false;
+        Editar =  false;
+        Mover.setEnabled(false);
+        Eliminar.setEnabled(true);
+        Nodo.setEnabled(true);
+        Linea.setEnabled(true);
+        Edit.setEnabled(true);
+        Update.setEnabled(false);
         arrastrarNodo(); 
+        
     }//GEN-LAST:event_MoverActionPerformed
 
     private void mostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarActionPerformed
@@ -283,6 +357,11 @@ public class Ventana extends javax.swing.JFrame {
         System.out.println("\n");
         for (int i = 0; i < ArregloNodo.size(); i++) {
             System.out.println("[" + ArregloNodo.get(i).getX + "] [" + ArregloNodo.get(i).getY + "]");
+        }
+        System.out.println("ArregloJLabel.size(): [" + ArregloJLabel.size() + "]");
+        Label label = new Label(); 
+        for (int i = 0; i < ArregloJLabel.size(); i++) {
+           label.CreateLabel(Panelp, ArregloJLabel, ArregloNodo.get(i).id, ArregloNodo.get(i).getX, ArregloNodo.get(i).getY, "", ArregloNodo); 
         }
     }//GEN-LAST:event_mostrarActionPerformed
 
@@ -293,13 +372,19 @@ public class Ventana extends javax.swing.JFrame {
         Moverb = false; 
         delete =  false;
         CrearLinea(); 
-        
+        Mover.setEnabled(true);
+        Eliminar.setEnabled(true);
+        Nodo.setEnabled(true);
+        Linea.setEnabled(false);
+        Edit.setEnabled(true);
+        Update.setEnabled(false);
+       
     }//GEN-LAST:event_LineaActionPerformed
 
     private void SaveModelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveModelActionPerformed
         // TODO add your handling code here:
         SaveModel save = new SaveModel(); 
-        save.Save(this.ArregloNodo, this.contador, this.ArregloLinea);
+        save.Save(this.ArregloNodo, this.contador, this.ArregloLinea, this.ArregloJLabel);
     }//GEN-LAST:event_SaveModelActionPerformed
 
     private void NewModelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewModelActionPerformed
@@ -323,7 +408,6 @@ public class Ventana extends javax.swing.JFrame {
         if(!dir.exists()){
             dir.mkdir();
         }
-        
         jFileChooser1.setCurrentDirectory(dir);
         int returnVal = jFileChooser1.showOpenDialog(this);
         if (returnVal == jFileChooser1.APPROVE_OPTION) {
@@ -359,7 +443,57 @@ public class Ventana extends javax.swing.JFrame {
         //DeleteNode();
        // Pintador_Emergencia();
         //VenidAPorMi
+        Mover.setEnabled(true);
+        Eliminar.setEnabled(false);
+        Nodo.setEnabled(true);
+        Linea.setEnabled(true);
+        Edit.setEnabled(true);
+        Update.setEnabled(false);
     }//GEN-LAST:event_EliminarActionPerformed
+
+    private void TextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TextActionPerformed
+
+    private void UpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateActionPerformed
+        // TODO add your handling code here:
+        
+        String TextLabel = Text.getText();
+        String CmaximoText = Cmaximo.getText();
+        if(IsNumeric(TextLabel) == true && IsNumeric(CmaximoText) == true){
+            
+            //int idConvertido = Integer.valueOf(TextLabel);
+            Nodo n = new Nodo();
+            n.setCminimo(TextLabel);
+            n.setCmaximo(CmaximoText);
+            ArregloNodo.get(ThisLabel).setCminimo(TextLabel);
+            ArregloNodo.get(ThisLabel).setCmaximo(CmaximoText);
+            System.out.println("ThisLabel -> " + ThisLabel);
+            ArregloJLabel.get(ThisLabel).setText(TextLabel);
+            System.out.println("TextLabel = " + TextLabel);
+            Panelp.removeAll();
+            Panelp.repaint();
+            hack_3(TextLabel, CmaximoText);
+        }
+    }//GEN-LAST:event_UpdateActionPerformed
+
+    private void EditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditActionPerformed
+        // TODO add your handling code here:
+        
+        Nodob = false;
+        Lineab = false; 
+        Moverb = false;
+        delete =  false; 
+        Editar = true;
+        //Edit(1, "");
+        Edit(indicador, "");
+        Mover.setEnabled(true);
+        Eliminar.setEnabled(true);
+        Nodo.setEnabled(true);
+        Linea.setEnabled(true);
+        Edit.setEnabled(false);
+        Update.setEnabled(false);
+    }//GEN-LAST:event_EditActionPerformed
 
     /**
      * @param args the command line arguments
@@ -399,7 +533,10 @@ public class Ventana extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu AboutUs;
     private javax.swing.JMenuItem CloseApp;
+    private javax.swing.JTextField Cmaximo;
+    private javax.swing.JButton Edit;
     private javax.swing.JButton Eliminar;
+    private javax.swing.JLabel Id;
     private javax.swing.JButton Linea;
     private javax.swing.JButton Mover;
     private javax.swing.JMenuItem NewModel;
@@ -408,8 +545,11 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JPanel PanelLinea;
     private javax.swing.JPanel Panelp;
     private javax.swing.JMenuItem SaveModel;
+    private javax.swing.JTextField Text;
     private javax.swing.JTextArea Texto;
+    private javax.swing.JButton Update;
     private javax.swing.JFileChooser jFileChooser1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
@@ -425,7 +565,7 @@ public class Ventana extends javax.swing.JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 
-                if(Moverb == true || Lineab == true || delete == true){
+                if(Moverb == true || Lineab == true || delete == true || Editar == true){
                    Panelp.removeMouseListener(this); 
                 }
                 int getX = e.getX() - 20; 
@@ -451,7 +591,7 @@ public class Ventana extends javax.swing.JFrame {
    
                 if(!isAlreadyNode){   
                     Nodo n = new Nodo(); 
-                    n.Circulo(Panelp.getGraphics(), getX, getY, r, r);
+                    n.Circulo(Panelp.getGraphics(), getX, getY, r, r, Color.yellow);
                     if(ArregloNodo.contains(n)){
                         ArregloNodo.remove(ArregloNodo.size()); 
                         System.out.println("Lo detecté...!");
@@ -462,15 +602,18 @@ public class Ventana extends javax.swing.JFrame {
                     n.setGetX(getX);
                     n.setGetY(getY);
                     n.setId(contador);
+                    n.setCminimo("0");
+                    n.setCmaximo("0");
+                    n.setColor(Color.yellow);
                     ArregloNodo.add(n);
                     Panelp.setLayout(null);
                     JLabel label = new JLabel("q", SwingConstants.CENTER);
-                    label.setText(String.valueOf(contador));
+                    label.setText("[" + n.getCminimo() + "," + n.getCmaximo()+ "]");
                     Panelp.add(label);
-                    label.setBackground(Color.yellow);
+                    label.setBackground(Color.white);
                     //label.setColor(Color.yellow);
                     label.setOpaque(true);
-                    label.setBounds(e.getX()-12, e.getY()-12, 25,25);
+                    label.setBounds(e.getX()-14, e.getY()-40, 50,15);
                     //label.setVerticalAlignment(SwingConstants.CENTER);
                     ArregloJLabel.add(label);
                     contador++; 
@@ -527,21 +670,39 @@ public class Ventana extends javax.swing.JFrame {
              
              @Override
              public void mouseDragged(MouseEvent e) {
-                  if(Nodob == true || Lineab == true || delete == true){
+                  if(Nodob == true || Lineab == true || delete == true || Editar == true){
                    Panelp.removeMouseMotionListener(this);
                    //Panelp.removeMouseListener(this);
                 }
                  // Si comienza el arrastre ...
-                if (!arrastrando)
-                {
+                if (!arrastrando){
                    // ... y el ratón está dentro del rectángulo
-                   if (EstaDentro(e))
-                   {
+                   if (EstaDentro(e)){
                       // Se guardan las posiciones del ratón
                       xAnteriorRaton = e.getX();
                       yAnteriorRaton = e.getY();
                       // y se marca que ha comenzado el arrastre.
                       arrastrando = true;
+                     
+                   }
+                   Nodo repintarNodo = new Nodo();
+                   for (Nodo nodo : ArregloNodo) {
+                       // System.out.println("Nodo ID: " + nodo.id);
+                        if(Integer.valueOf(nodo.Cmaximo) >= 100) {
+                            repintarNodo.Rectangulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r,Color.blue);
+                        }else if(Integer.valueOf(nodo.Cminimo) > 0){ 
+                            repintarNodo.Circulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r,Color.red);
+                        }else{
+                             repintarNodo.Circulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r,Color.yellow);
+                        }
+                        //repintarNodo.Circulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r ,Color.yellow);
+                    }
+                  System.out.println("ArregloJLabel.size(): [" + ArregloJLabel.size() + "]");
+                   Label label = new Label(); 
+
+                   for (int i = 0; i < ArregloJLabel.size(); i++) {
+                      //int aux = Integer.valueOf(ArregloNodo.get(i).getCminimo());
+                      label.CreateLabel(Panelp, ArregloJLabel, ArregloNodo.get(i).id, ArregloNodo.get(i).getX, ArregloNodo.get(i).getY, "", ArregloNodo); 
                    }
                 }
                 else
@@ -561,10 +722,35 @@ public class Ventana extends javax.swing.JFrame {
                    xAnteriorRaton = e.getX();
                    yAnteriorRaton = e.getY();
                     
+                    System.out.println("ArregloJLabel.size(): [" + ArregloJLabel.size() + "]");
+                    Panelp.removeAll();
+                    Panelp.repaint();
+                    Nodo repintarNodo = new Nodo();
+   //                 Linea repintarLinea = new Linea();
 
+                    for (Linea linea : ArregloLinea) {
+                        linea.LineaId(Panelp.getGraphics(), linea.id1, linea.id2, ArregloNodo, r);
+                        System.out.println("ID1: " + linea.id1 + "\t ID2: " + linea.id2);
+                    }
+                   for (Nodo nodo : ArregloNodo) {
+                       // System.out.println("Nodo ID: " + nodo.id);
+                     if(Integer.valueOf(nodo.Cmaximo) >= 100) {
+                            repintarNodo.Rectangulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r,Color.blue);
+                     }else if(Integer.valueOf(nodo.Cminimo) > 0){ 
+                        repintarNodo.Circulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r,Color.red);
+                     }else{
+                         repintarNodo.Circulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r,Color.yellow);
+                     }
+                        //repintarNodo.Circulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r,Color.yellow);
+                    }
+                  System.out.println("ArregloJLabel.size(): [" + ArregloJLabel.size() + "]");
+                   Label label = new Label(); 
+
+                   for (int i = 0; i < ArregloJLabel.size(); i++) {
+                      label.CreateLabel(Panelp, ArregloJLabel, ArregloNodo.get(i).id, ArregloNodo.get(i).getX, ArregloNodo.get(i).getY, ArregloNodo.get(i).getCminimo(), ArregloNodo); 
+                   }
+                   hack_2();
                    // y se manda repintar el Canvas
-                  repaint();
-                  
                 }
              }
 
@@ -574,33 +760,9 @@ public class Ventana extends javax.swing.JFrame {
                    Panelp.removeMouseMotionListener(this);
                 }
                  arrastrando = false;
-                 Nodo repintarNodo = new Nodo();
-//                 Linea repintarLinea = new Linea();
-                 
-                 for (Linea linea : ArregloLinea) {
-                     linea.LineaId(Panelp.getGraphics(), linea.id1, linea.id2, ArregloNodo, r);
-                     System.out.println("ID1: " + linea.id1 + "\t ID2: " + linea.id2);
-                 }
-                 
-//                 for (int i = 0; i < ArregloLinea.size(); i++) {
-//                    repintarLinea.LineaId(Panelp.getGraphics(), repintarLinea.inicio, repintarLinea.end, ArregloNodo, r);
-//
-//                    System.out.println("ArregloLinea "+ i);
-//                 }
-//              
-                
-                 
-               
-                  
-                 for (Nodo nodo : ArregloNodo) {
-                    // System.out.println("Nodo ID: " + nodo.id);
-                     repintarNodo.Circulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r);
-                 }
-                
-             }
+                }
          }; 
          Panelp.addMouseMotionListener(arrastrar);
-         //Pintador_Emergencia();
      }
      
      public void CrearLinea(){
@@ -632,7 +794,7 @@ public class Ventana extends javax.swing.JFrame {
                  LlegadaX = e.getX(); 
                  LlegadaY = e.getY();
                  Linea l = new Linea(); 
-                 l.Linea(Panelp.getGraphics(), inicioX, inicioY, LlegadaX, LlegadaY, ArregloNodo, r, ArregloLinea, l);
+                 l.Linea(Panelp.getGraphics(), inicioX, inicioY, LlegadaX, LlegadaY, ArregloNodo, r, ArregloLinea, l, ArregloJLabel, Panelp);
                  
              }
 
@@ -657,6 +819,7 @@ public class Ventana extends javax.swing.JFrame {
             
             scan = new Scanner(file);
             
+            int k = 0;
             while(scan.hasNextLine()){
              String data = scan.nextLine();
 
@@ -668,25 +831,47 @@ public class Ventana extends javax.swing.JFrame {
                 int getX= Integer.parseInt(properties[1]);
                 int getY = Integer.parseInt(properties[2]);
                 int Id = Integer.parseInt(properties[3]);
+                String TextNodoLoad = properties[4];
                 x[cont] = Integer.parseInt(properties[1]);
                 y[cont] = Integer.parseInt(properties[2]);
                
+                //Nodo
                 Nodo n = new Nodo(); 
-                n.Circulo(Panelp.getGraphics(), getX, getY, r, r);
+                n.Circulo(Panelp.getGraphics(), getX, getY, r, r,Color.yellow);
                 n.setGetX(getX);
                 n.setGetY(getY);
                 n.setId(Id);
+                n.setCminimo(TextNodoLoad);
                 ArregloNodo.add(n);
                 
+                //Label
+                JLabel label = new JLabel("", SwingConstants.CENTER);
+                label.setText(TextNodoLoad);
+                Panelp.add(label);
+                label.setBackground(Color.yellow);
+                label.setOpaque(true);
+                label.setBounds(ArregloNodo.get(k).getX +8, ArregloNodo.get(k).getY+8, 25,25);
+                ArregloJLabel.add(label);
+                
+                //Repinta todos los nodos
                 for (Nodo nodo : ArregloNodo) {
                     System.out.println("getX: " + nodo.getX + " getY: " + nodo.getY);
                 }
+                
+                //Repinta todos los labels
+                Label label2 = new Label(); 
+
+                for (int i = 0; i < ArregloJLabel.size(); i++) {
+                    int aux = Integer.valueOf(ArregloNodo.get(i).getCminimo());
+                   label2.CreateLabel(Panelp, ArregloJLabel, aux, ArregloNodo.get(i).getX, ArregloNodo.get(i).getY, "", ArregloNodo); 
+                }
+
                 //repaint();
                  System.out.println("Node Done!");
                 cont += 1; 
              }
              
-             if(properties[0].equals("Line")){
+            if(properties[0].equals("Line")){
                 int getId1 = Integer.parseInt(properties[1]);
                 int getId2 = Integer.parseInt(properties[2]);
          
@@ -704,28 +889,30 @@ public class Ventana extends javax.swing.JFrame {
                 for (Nodo nodo : ArregloNodo) {
                     System.out.println("getX: " + nodo.getX + " getY: " + nodo.getY);
                 }
-                //repaint();
+                
                  System.out.println("Line Done!");
-            
-               // cont += 1; 
              }
-             
-             //if(properties[0].equals("counter")){
-                 
-                 //int contadorDelModelo = Integer.parseInt(properties[1]);
-                 System.out.println("ArregloLinea.size() = " + ArregloLinea.size());
-                 this.contador =  ArregloNodo.size()+1;
-            // }
-                 for (Linea linea : ArregloLinea) {
-                     linea.LineaId(Panelp.getGraphics(), linea.id1, linea.id2, ArregloNodo, r);
-                     System.out.println("ID1: " + linea.id1 + "\t ID2: " + linea.id2);
-                 }
-             //this.contador = cont;
-             
+            System.out.println("ArregloLinea.size() = " + ArregloLinea.size());
+            this.contador =  ArregloNodo.size()+1;
+          
+            for (Linea linea : ArregloLinea) {
+                linea.LineaId(Panelp.getGraphics(), linea.id1, linea.id2, ArregloNodo, r);
+                System.out.println("ID1: " + linea.id1 + "\t ID2: " + linea.id2);
+            }
             
+            
+            if(properties[0].equals("Label")){
+                
+                String textValue = properties[1];
+                
+                
+
+                k++;//Contador de los label
             } 
           
-                 
+            
+            
+          } //While
             
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
@@ -737,7 +924,7 @@ public class Ventana extends javax.swing.JFrame {
         MouseListener Delete = new MouseListener() {
            @Override
            public void mouseClicked(MouseEvent e) {
-                if(Moverb == true || Nodob == true || Lineab == true){
+                if(Moverb == true || Nodob == true || Lineab == true || Editar == true){
                     Panelp.removeMouseListener(this); 
                 }
                 
@@ -757,14 +944,12 @@ public class Ventana extends javax.swing.JFrame {
                           
                           lastMoveX = ArregloNodo.get(i).getX + 5;
                           lastMoveY = ArregloNodo.get(i).getY + 5;
-                          
                           deleteNode = ArregloNodo.get(i).id; 
-                          ArregloNodo.remove(i); 
+                          ArregloNodo.remove(i);
+                          ArregloJLabel.remove(i);
                           //Label label = new Label();
-                          //label.DeleteLabel(Panelp, ArregloJLabel, i);
+//                          label.DeleteLabel(Panelp, ArregloJLabel, i);
                           //repaint(); 
-                          
-                          
                           break;
                         } 
                       
@@ -774,19 +959,14 @@ public class Ventana extends javax.swing.JFrame {
                     final int a = deleteNode;
                     ArregloLinea.removeIf(l -> l.id1 ==  a || l.id2 == a);
                     System.out.println("AFTER - ArregloLinea.size() = " + ArregloLinea.size());
-                    
-                    System.out.println("\nBORRANDO LINEA");
-                    System.out.println("BEFORE - ArregloLinea.size() = " + ArregloLinea.size());
-                    ArregloLinea.removeIf(l -> l.id1 ==  a || l.id2 == a);
-                    System.out.println("AFTER - ArregloLinea.size() = " + ArregloLinea.size());
-//             
-//                    
-//                    Label label = new Label();
-//                    for (int i = 0; i < ArregloJLabel.size(); i++) {
-//                        label.CreateLabel(ArregloNodo.get(i).getX, ArregloNodo.get(i).getY, "", ArregloNodo, ArregloJLabel, Panelp, i-1); 
-//                    }
                     System.out.println("So far so good");
-                    
+                    System.out.println("ArregloJLabel.size(): [" + ArregloJLabel.size() + "]");
+//                    Label label = new Label(); 
+//                    
+//                    for (int i = 0; i < ArregloJLabel.size(); i++) {
+//                       label.CreateLabel(Panelp, ArregloJLabel, ArregloNodo.get(i).id, ArregloNodo.get(i).getX, ArregloNodo.get(i).getY); 
+//                    }
+                    //Panelp.removeMouseListener(this);
                     if(deleteNode > -1){
                         Panelp.removeAll();
                         Panelp.repaint();
@@ -802,16 +982,14 @@ public class Ventana extends javax.swing.JFrame {
                        
                                
                         hack();
-                         //Label label = new Label();
-                        //for (int i = 0; i < ArregloJLabel.size(); i++) {
+//                        Label label = new Label();
+//                        for (int i = 0; i < ArregloJLabel.size(); i++) {
 //                            label.CreateLabel(ArregloNodo.get(i).getX, ArregloNodo.get(i).getY, "", ArregloNodo, ArregloJLabel, Panelp, i); 
 //                        }
+                        //Panelp.removeMouseListener(this); 
+                        
                     }
-                    
-            
                 }
-
-             
            }
 
            @Override
@@ -841,12 +1019,19 @@ public class Ventana extends javax.swing.JFrame {
              
              @Override
              public void mouseMoved(MouseEvent e) {
-                if(Nodob == true || Lineab == true || Moverb == true){
+                if(Nodob == true || Lineab == true || Moverb == true || Editar == true){
                    Panelp.removeMouseMotionListener(this);
                 } 
                  Nodo repintarNodo = new Nodo();
                  for (Nodo nodo : ArregloNodo) {
-                     repintarNodo.Circulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r);
+                    if(Integer.valueOf(nodo.Cmaximo) >= 100) {
+                            repintarNodo.Rectangulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r,Color.blue);
+                    }else if(Integer.valueOf(nodo.Cminimo) > 0){ 
+                        repintarNodo.Circulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r,Color.red);
+                    }else{
+                         repintarNodo.Circulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r,Color.yellow);
+                    }
+                     //repintarNodo.Circulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r,Color.yellow);
                  }
                 
                 for (Linea linea : ArregloLinea) {
@@ -854,32 +1039,266 @@ public class Ventana extends javax.swing.JFrame {
                      System.out.println("ID1: " + linea.id1 + "\t ID2: " + linea.id2);
                  }
                  
-                
+                System.out.println("ArregloJLabel.size(): [" + ArregloJLabel.size() + "]");
+                Label label = new Label(); 
+                for (int i = 0; i < ArregloJLabel.size(); i++) {
+                   int aux = Integer.valueOf(ArregloNodo.get(i).getCminimo());
+                   label.CreateLabel(Panelp, ArregloJLabel, ArregloNodo.get(i).getId(), ArregloNodo.get(i).getX, ArregloNodo.get(i).getY, ArregloNodo.get(i).getCminimo(), ArregloNodo); 
+                }
                  System.out.println("Repintante liniesita!");
 //                for (Linea linea : ArregloLinea) {
 //                      repintarLinea.LineaId(Panelp.getGraphics(), linea.getInicio(), linea.getEnd(), ArregloNodo, r);
 //                }
-                 
+                 Panelp.removeMouseMotionListener(this);
              }
+             
+         
          }; 
          Panelp.addMouseMotionListener(arrashack);
+         
          try {
             Robot robot = new Robot();
 
             // Move mouse cursor to 200, 200
-
-            // Press the mouse button #1.
-            robot.mouseMove(200, 200);
-
-            // Scroll the screen up for a mouse with a wheel support.
+//          // Press the mouse button #1.
+            robot.mouseMove(300, 300);
+//
+//            // Scroll the screen up for a mouse with a wheel support.
             robot.mouseWheel(-100);
-        } catch (AWTException e) {
-            e.printStackTrace();
-        }
+       } catch (AWTException e) {
+           e.printStackTrace();
+       }
+         
       }
     
     int lastMoveX = 0;
     int lastMoveY = 0;
     
+    public void hack_2(){
+         MouseMotionListener arrashack = new MouseMotionListener() {
+             @Override
+             public void mouseDragged(MouseEvent e) {}
+             
+             @Override
+             public void mouseMoved(MouseEvent e) {
+                if(Nodob == true || Lineab == true || Moverb == true || Editar == true){
+                   Panelp.removeMouseMotionListener(this);
+                } 
+                 Nodo repintarNodo = new Nodo();
+                 for (Nodo nodo : ArregloNodo) {
+                     if(Integer.valueOf(nodo.Cmaximo) >= 100) {
+                            repintarNodo.Rectangulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r,Color.blue);
+                     }else if(Integer.valueOf(nodo.Cminimo) > 0){ 
+                        repintarNodo.Circulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r,Color.red);
+                     }else{
+                         repintarNodo.Circulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r,Color.yellow);
+                     }
+                     
+                     
+                    // repintarNodo.Circulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r,Color.yellow);
+                 }
+                
+                for (Linea linea : ArregloLinea) {
+                     linea.LineaId(Panelp.getGraphics(), linea.id1, linea.id2, ArregloNodo, r);
+                     System.out.println("ID1: " + linea.id1 + "\t ID2: " + linea.id2);
+                 }
+                 
+//                System.out.println("ArregloJLabel.size(): [" + ArregloJLabel.size() + "]");
+//                Label label = new Label(); 
+//                for (int i = 0; i < ArregloJLabel.size(); i++) {
+//                   int aux = Integer.valueOf(ArregloNodo.get(i).getCminimo());
+//                   label.CreateLabel(Panelp, ArregloJLabel, aux, ArregloNodo.get(i).getX, ArregloNodo.get(i).getY, ArregloNodo.get(i).getCminimo(), ArregloNodo); 
+//                }
+                
+                 System.out.println("Repintante liniesita!");
+//                for (Linea linea : ArregloLinea) {
+//                      repintarLinea.LineaId(Panelp.getGraphics(), linea.getInicio(), linea.getEnd(), ArregloNodo, r);
+//                }
+                 Panelp.removeMouseMotionListener(this);
+             }
+             
+         
+         }; 
+         Panelp.addMouseMotionListener(arrashack);
+         
+//         try {
+//            Robot robot = new Robot();
+//
+//            // Move mouse cursor to 200, 200
+//            // Press the mouse button #1.
+//            robot.mouseMove(300, 300);
+//
+//            // Scroll the screen up for a mouse with a wheel support.
+//            robot.mouseWheel(-100);
+//        } catch (AWTException e) {
+//            e.printStackTrace();
+//        }
+//         
+      }
+    
+    boolean callTextListenerOneTime = true;
+    public void Edit(int Indicador, String TextLabel){
+        MouseListener edit = new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                
+                if(Moverb == true || Nodob == true || Lineab == true || delete == true){
+                    Panelp.removeMouseListener(this); 
+                }
+                 //Panelp.removeMouseMotionListener(this);
+                for(int i = 0; i < ArregloNodo.size(); i++){
+                    if((e.getX() > ArregloNodo.get(i).getX) &&(e.getX() < (ArregloNodo.get(i).getX + r)) &&(e.getY() > ArregloNodo.get(i).getY) && (e.getY() < (ArregloNodo.get(i).getY + r))){
+                        ThisLabel = i; 
+                        Update.setEnabled(true);
+                        break; 
+                    }
+                }
+                System.out.println("Id del Nodo [" + ThisLabel + "] -> " + ArregloNodo.get(ThisLabel).id);
+                Text.setText(String.valueOf(ArregloNodo.get(ThisLabel).getCminimo()));
+                Cmaximo.setText(String.valueOf(ArregloNodo.get(ThisLabel).getCmaximo()));
+//                ArregloJLabel.get(ThisLabel).setText(TextLabel);
+//                Label label = new Label(); 
+//                for (int i = 0; i < ArregloJLabel.size(); i++) {
+//                   label.CreateLabel(Panelp, ArregloJLabel, ArregloNodo.get(i).id, ArregloNodo.get(i).getX, ArregloNodo.get(i).getY, ""); 
+//                }
+               if(callTextListenerOneTime){
+                    textListener();
+                    callTextListenerOneTime = false;            
+               }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        };
+        Panelp.addMouseListener(edit);
+    }
+    
+    public void textListener(){
+        MouseListener mouseListener = new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Update.doClick();
+                Text.removeMouseListener(this);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                Update.doClick();
+                Text.removeMouseListener(this);
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                Update.doClick();
+                Text.removeMouseListener(this);
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                Update.doClick();
+                Text.removeMouseListener(this);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                Update.doClick();
+                Text.removeMouseListener(this);
+            }
+        };
+        
+        Text.addMouseListener(mouseListener);
+        
+    }
+    
+    public boolean IsNumeric(String string){
+        boolean resultado;
+        try{
+            Integer.parseInt(string);
+            resultado = true;
+        } catch(NumberFormatException excepcion){
+            resultado = false;
+            
+        }
+        
+        return resultado;
+    }
+    
+    
+    public void hack_3(String TextLabel, String CmaximoText){
+         MouseMotionListener arrashack = new MouseMotionListener() {
+             @Override
+             public void mouseDragged(MouseEvent e) {}
+             
+             @Override
+             public void mouseMoved(MouseEvent e) {
+                if(Nodob == true || Lineab == true || Moverb == true || Editar == true){
+                   Panelp.removeMouseMotionListener(this);
+                } 
+                 Nodo repintarNodo = new Nodo();
+                 
+                 for (Nodo nodo : ArregloNodo) {
+                    if(Integer.valueOf(nodo.Cmaximo) >= 100) {
+                            repintarNodo.Rectangulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r,Color.blue);
+                    }else if(Integer.valueOf(nodo.Cminimo) > 0){ 
+                        repintarNodo.Circulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r,Color.red);
+                    }else{
+                         repintarNodo.Circulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r,Color.yellow);
+                    }
+                    
+                 }
+                for (Linea linea : ArregloLinea) {
+                     linea.LineaId(Panelp.getGraphics(), linea.id1, linea.id2, ArregloNodo, r);
+                     System.out.println("ID1: " + linea.id1 + "\t ID2: " + linea.id2);
+                 }
+                System.out.println("ArregloJLabel.size(): [" + ArregloJLabel.size() + "]");
+                Label label = new Label(); 
+                for(int i = 0; i < ArregloJLabel.size(); i++) { 
+                   //int aux = Integer.valueOf(ArregloNodo.get(i).getCminimo());
+                   if(ArregloNodo.get(i).id== ThisLabel+1){
+                       label.CreateLabel(Panelp, ArregloJLabel, ArregloNodo.get(i).id, ArregloNodo.get(i).getX, ArregloNodo.get(i).getY, TextLabel, ArregloNodo);
+                       
+                   }else{
+                       label.CreateLabel(Panelp, ArregloJLabel, ArregloNodo.get(i).id, ArregloNodo.get(i).getX, ArregloNodo.get(i).getY, "", ArregloNodo);
+                   }
+                }
+                hack();
+                 System.out.println("Repintante liniesita!");
+//                for (Linea linea : ArregloLinea) {
+//                      repintarLinea.LineaId(Panelp.getGraphics(), linea.getInicio(), linea.getEnd(), ArregloNodo, r);
+//                }
+                 Panelp.removeMouseMotionListener(this);
+             }
+         
+         }; 
+         System.out.println("we're in hack!");
+         Panelp.addMouseMotionListener(arrashack);
+         
+         try {
+            Robot robot = new Robot();
+//
+//            // Move mouse cursor to 200, 200
+//            // Press the mouse button #1.
+           robot.mouseMove(300, 300);
+//
+//            // Scroll the screen up for a mouse with a wheel support.
+           robot.mouseWheel(-100);
+        } catch (AWTException e) {
+           e.printStackTrace();
+        }
+         
+      }
 }
 
