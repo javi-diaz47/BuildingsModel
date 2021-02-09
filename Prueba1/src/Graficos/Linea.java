@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Graficos;
 
 import java.awt.BasicStroke;
@@ -56,7 +51,6 @@ public class Linea {
                         y1 = ArregloNodo.get(i).getY + 20;
                         id2 = ArregloNodo.get(i).id; 
                     }
-                    //break;
                 } 
                 if(are_two_nodes[0] > -1 && are_two_nodes[1] > -1){
                     if(are_two_nodes[0] != are_two_nodes[1]) {                     
@@ -73,7 +67,7 @@ public class Linea {
                         System.out.println("Id1: " + id1 + " Id2: " + id2);
                         System.out.println("Numero de lienas: " + ArregloLinea.size());
                         
-                        //REpintando nodos
+                        //Repintando nodos
                         for(Nodo nodo: ArregloNodo){
                             if(Integer.valueOf(nodo.Cmaximo) >= 100) {
                                 nodo.Rectangulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r,Color.cyan);

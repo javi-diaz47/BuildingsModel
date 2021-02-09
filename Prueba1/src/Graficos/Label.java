@@ -36,7 +36,6 @@ public class Label {
         label.setOpaque(true);
         label.setBounds(x-5, y-20, 50,15);
         }
-//        CreateId(Panelp, ArregloNodo, id);
     }
     public void CreateId(JPanel Panelp, ArrayList<Nodo> ArregloNodo, int id){
         Panelp.setLayout(null);
@@ -99,7 +98,6 @@ public class Label {
     
     public void setId(int id) {
         this.id = id;
-       // text = String.valueOf(id);
     }
     
     
