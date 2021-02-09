@@ -18,7 +18,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
-//import org.graalvm.compiler.phases.common.NodeCounterPhase.Stage;
 
 
 public class Ventana extends javax.swing.JFrame {
@@ -620,15 +619,18 @@ public class Ventana extends javax.swing.JFrame {
                     label.setBackground(Color.white);
                     //label.setColor(Color.yellow);
                     label.setOpaque(true);
-                    label.setBounds(e.getX()-14, e.getY()-40, 50,15);
+                    label.setBounds(e.getX()-24, e.getY()-40, 50,15);
                     //label.setVerticalAlignment(SwingConstants.CENTER);
                     ArregloJLabel.add(label);
                     contador++; 
                     //System.out.println(ArregloNodo); 
                     for (Nodo nodo : ArregloNodo) {
                         System.out.println("getX: " + nodo.getX + " getY: " + nodo.getY  +  " id: [" + nodo.id + "]");
-                        
+                        Label labelId = new Label();
+                        labelId.CreateId(Panelp, ArregloNodo, nodo.id);
+
                     }
+                    
                     System.out.println("Contador: -> " + ArregloNodo.size());
                     
                 }      
@@ -696,12 +698,15 @@ public class Ventana extends javax.swing.JFrame {
                    for (Nodo nodo : ArregloNodo) {
                        // System.out.println("Nodo ID: " + nodo.id);
                         if(Integer.valueOf(nodo.Cmaximo) >= 100) {
-                            repintarNodo.Rectangulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r,Color.blue);
+                            repintarNodo.Rectangulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r,Color.cyan);
                         }else if(Integer.valueOf(nodo.Cminimo) > 0){ 
                             repintarNodo.Circulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r,Color.red);
                         }else{
                              repintarNodo.Circulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r,Color.yellow);
                         }
+                         Label labelId = new Label();
+                        labelId.CreateId(Panelp, ArregloNodo, nodo.id);
+
                         //repintarNodo.Circulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r ,Color.yellow);
                     }
                   System.out.println("ArregloJLabel.size(): [" + ArregloJLabel.size() + "]");
@@ -710,10 +715,10 @@ public class Ventana extends javax.swing.JFrame {
                    for (int i = 0; i < ArregloJLabel.size(); i++) {
                       //int aux = Integer.valueOf(ArregloNodo.get(i).getCminimo());
                       label.CreateLabel(Panelp, ArregloJLabel, ArregloNodo.get(i).id, ArregloNodo.get(i).getX, ArregloNodo.get(i).getY, "", ArregloNodo); 
+                      
                    }
-                }
-                else
-                {   
+                   
+                } else{   
                    // Si ya había empezado el arrastre, se calculan las nuevas
                    // coordenadas del rectángulo
                    int nuevaX = (ArregloNodo.get(indicador).getX + e.getX()) - xAnteriorRaton;
@@ -721,9 +726,6 @@ public class Ventana extends javax.swing.JFrame {
                    
                    ArregloNodo.get(indicador).setGetX(nuevaX);
                    ArregloNodo.get(indicador).setGetY(nuevaY);
-                   
-                   
-                  // repaint();
                    
                    // Se guarda la posición del ratón para el siguiente cálculo
                    xAnteriorRaton = e.getX();
@@ -733,22 +735,21 @@ public class Ventana extends javax.swing.JFrame {
                     Panelp.removeAll();
                     Panelp.repaint();
                     Nodo repintarNodo = new Nodo();
-   //                 Linea repintarLinea = new Linea();
 
                     for (Linea linea : ArregloLinea) {
-                        linea.LineaId(Panelp.getGraphics(), linea.id1, linea.id2, ArregloNodo, r);
+                        linea.LineaId(Panelp.getGraphics(), linea.id1, linea.id2, ArregloNodo, r, ArregloLinea ,Panelp);
                         System.out.println("ID1: " + linea.id1 + "\t ID2: " + linea.id2);
                     }
-                   for (Nodo nodo : ArregloNodo) {
-                       // System.out.println("Nodo ID: " + nodo.id);
-                     if(Integer.valueOf(nodo.Cmaximo) >= 100) {
-                            repintarNodo.Rectangulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r,Color.blue);
-                     }else if(Integer.valueOf(nodo.Cminimo) > 0){ 
-                        repintarNodo.Circulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r,Color.red);
-                     }else{
-                         repintarNodo.Circulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r,Color.yellow);
-                     }
-                        //repintarNodo.Circulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r,Color.yellow);
+                    for (Nodo nodo : ArregloNodo) {
+
+                        if(Integer.valueOf(nodo.Cmaximo) >= 100) {
+                               repintarNodo.Rectangulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r,Color.cyan);
+                        }else if(Integer.valueOf(nodo.Cminimo) > 0){ 
+                           repintarNodo.Circulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r,Color.red);
+                        }else{
+                            repintarNodo.Circulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r,Color.yellow);
+                        }
+
                     }
                   System.out.println("ArregloJLabel.size(): [" + ArregloJLabel.size() + "]");
                    Label label = new Label(); 
@@ -757,7 +758,6 @@ public class Ventana extends javax.swing.JFrame {
                       label.CreateLabel(Panelp, ArregloJLabel, ArregloNodo.get(i).id, ArregloNodo.get(i).getX, ArregloNodo.get(i).getY, ArregloNodo.get(i).getCminimo(), ArregloNodo); 
                    }
                    hack_2();
-                   // y se manda repintar el Canvas
                 }
              }
 
@@ -839,6 +839,8 @@ public class Ventana extends javax.swing.JFrame {
                 int getY = Integer.parseInt(properties[2]);
                 int Id = Integer.parseInt(properties[3]);
                 String TextNodoLoad = properties[4];
+                String CmaximaLoad = properties[5];
+                int  ColorId= Integer.parseInt(properties[6]);
                 x[cont] = Integer.parseInt(properties[1]);
                 y[cont] = Integer.parseInt(properties[2]);
                
@@ -849,15 +851,26 @@ public class Ventana extends javax.swing.JFrame {
                 n.setGetY(getY);
                 n.setId(Id);
                 n.setCminimo(TextNodoLoad);
-                ArregloNodo.add(n);
+                n.setCmaximo(CmaximaLoad);
+                if(ColorId == 1){
+                    n.setColor(Color.yellow);
+                }else if(ColorId == 2){
+                    n.setColor(Color.cyan);
+                }else{
+                    n.setColor(Color.red);
+                }
+                     
                 
+                ArregloNodo.add(n);
+                Label labelId = new Label();
+                labelId.CreateId(Panelp, ArregloNodo, n.id);
                 //Label
                 JLabel label = new JLabel("", SwingConstants.CENTER);
                 label.setText(TextNodoLoad);
                 Panelp.add(label);
-                label.setBackground(Color.yellow);
+                label.setBackground(Color.white);
                 label.setOpaque(true);
-                label.setBounds(ArregloNodo.get(k).getX +8, ArregloNodo.get(k).getY+8, 25,25);
+                //label.setBounds(ArregloNodo.get(k).getX +8, ArregloNodo.get(k).getY-40, 25,25);
                 ArregloJLabel.add(label);
                 
                 //Repinta todos los nodos
@@ -865,16 +878,8 @@ public class Ventana extends javax.swing.JFrame {
                     System.out.println("getX: " + nodo.getX + " getY: " + nodo.getY);
                 }
                 
-                //Repinta todos los labels
-                Label label2 = new Label(); 
-
-                for (int i = 0; i < ArregloJLabel.size(); i++) {
-                    int aux = Integer.valueOf(ArregloNodo.get(i).getCminimo());
-                   label2.CreateLabel(Panelp, ArregloJLabel, aux, ArregloNodo.get(i).getX, ArregloNodo.get(i).getY, "", ArregloNodo); 
-                }
-
-                //repaint();
-                 System.out.println("Node Done!");
+                
+                System.out.println("Node Done!");
                 cont += 1; 
              }
              
@@ -896,14 +901,18 @@ public class Ventana extends javax.swing.JFrame {
                 for (Nodo nodo : ArregloNodo) {
                     System.out.println("getX: " + nodo.getX + " getY: " + nodo.getY);
                 }
-                
+                Label label2 = new Label(); 
+                for (int i = 0; i < ArregloJLabel.size(); i++) {
+                   //int aux = Integer.valueOf(ArregloNodo.get(i).getCminimo());
+                   label2.CreateLabel(Panelp, ArregloJLabel, ArregloNodo.get(i).getId(), ArregloNodo.get(i).getX, ArregloNodo.get(i).getY, ArregloNodo.get(i).getCminimo(), ArregloNodo); 
+                }
                  System.out.println("Line Done!");
              }
             System.out.println("ArregloLinea.size() = " + ArregloLinea.size());
             this.contador =  ArregloNodo.size()+1;
           
             for (Linea linea : ArregloLinea) {
-                linea.LineaId(Panelp.getGraphics(), linea.id1, linea.id2, ArregloNodo, r);
+                linea.LineaId(Panelp.getGraphics(), linea.id1, linea.id2, ArregloNodo, r,ArregloLinea ,Panelp);
                 System.out.println("ID1: " + linea.id1 + "\t ID2: " + linea.id2);
             }
             
@@ -911,14 +920,10 @@ public class Ventana extends javax.swing.JFrame {
             if(properties[0].equals("Label")){
                 
                 String textValue = properties[1];
-                
-                
 
                 k++;//Contador de los label
             } 
           
-            
-            
           } //While
             
         } catch (FileNotFoundException ex) {
@@ -954,9 +959,7 @@ public class Ventana extends javax.swing.JFrame {
                           deleteNode = ArregloNodo.get(i).id; 
                           ArregloNodo.remove(i);
                           ArregloJLabel.remove(i);
-                          //Label label = new Label();
-//                          label.DeleteLabel(Panelp, ArregloJLabel, i);
-                          //repaint(); 
+                     
                           break;
                         } 
                       
@@ -968,32 +971,12 @@ public class Ventana extends javax.swing.JFrame {
                     System.out.println("AFTER - ArregloLinea.size() = " + ArregloLinea.size());
                     System.out.println("So far so good");
                     System.out.println("ArregloJLabel.size(): [" + ArregloJLabel.size() + "]");
-//                    Label label = new Label(); 
-//                    
-//                    for (int i = 0; i < ArregloJLabel.size(); i++) {
-//                       label.CreateLabel(Panelp, ArregloJLabel, ArregloNodo.get(i).id, ArregloNodo.get(i).getX, ArregloNodo.get(i).getY); 
-//                    }
-                    //Panelp.removeMouseListener(this);
+
                     if(deleteNode > -1){
                         Panelp.removeAll();
                         Panelp.repaint();
-                        //Panelp.repaint();
-                        //Pintador_Emergencia();
-                       /* System.out.println("La wea ya esta");
-                        
-                        System.out.println("repaint after de Pin_Emer");
-                        Panelp.repaint(); // solo agarra este pero le da flojera pintar
-                        Panelp.removeMouseListener(this);// compi repaint no espere mas, Pinte!
-                        Panelp.repaint();// Esta bien ya 
-                        */
-                       
                                
                         hack();
-//                        Label label = new Label();
-//                        for (int i = 0; i < ArregloJLabel.size(); i++) {
-//                            label.CreateLabel(ArregloNodo.get(i).getX, ArregloNodo.get(i).getY, "", ArregloNodo, ArregloJLabel, Panelp, i); 
-//                        }
-                        //Panelp.removeMouseListener(this); 
                         
                     }
                 }
@@ -1032,17 +1015,20 @@ public class Ventana extends javax.swing.JFrame {
                  Nodo repintarNodo = new Nodo();
                  for (Nodo nodo : ArregloNodo) {
                     if(Integer.valueOf(nodo.Cmaximo) >= 100) {
-                            repintarNodo.Rectangulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r,Color.blue);
+                            repintarNodo.Rectangulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r,Color.cyan);
                     }else if(Integer.valueOf(nodo.Cminimo) > 0){ 
-                        repintarNodo.Circulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r,Color.red);
+                        repintarNodo.Circulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r,Color.RED);
                     }else{
                          repintarNodo.Circulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r,Color.yellow);
                     }
-                     //repintarNodo.Circulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r,Color.yellow);
+                    
+                    Label labelId = new Label();
+                    labelId.CreateId(Panelp, ArregloNodo, nodo.id);
+
                  }
                 
                 for (Linea linea : ArregloLinea) {
-                     linea.LineaId(Panelp.getGraphics(), linea.id1, linea.id2, ArregloNodo, r);
+                     linea.LineaId(Panelp.getGraphics(), linea.id1, linea.id2, ArregloNodo, r,ArregloLinea ,Panelp);
                      System.out.println("ID1: " + linea.id1 + "\t ID2: " + linea.id2);
                  }
                  
@@ -1053,9 +1039,6 @@ public class Ventana extends javax.swing.JFrame {
                    label.CreateLabel(Panelp, ArregloJLabel, ArregloNodo.get(i).getId(), ArregloNodo.get(i).getX, ArregloNodo.get(i).getY, ArregloNodo.get(i).getCminimo(), ArregloNodo); 
                 }
                  System.out.println("Repintante liniesita!");
-//                for (Linea linea : ArregloLinea) {
-//                      repintarLinea.LineaId(Panelp.getGraphics(), linea.getInicio(), linea.getEnd(), ArregloNodo, r);
-//                }
                  Panelp.removeMouseMotionListener(this);
              }
              
@@ -1099,54 +1082,33 @@ public class Ventana extends javax.swing.JFrame {
                  Nodo repintarNodo = new Nodo();
                  for (Nodo nodo : ArregloNodo) {
                      if(Integer.valueOf(nodo.Cmaximo) >= 100) {
-                            repintarNodo.Rectangulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r,Color.blue);
+                            repintarNodo.Rectangulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r,Color.cyan);
                      }else if(Integer.valueOf(nodo.Cminimo) > 0){ 
                         repintarNodo.Circulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r,Color.red);
                      }else{
                          repintarNodo.Circulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r,Color.yellow);
                      }
-                     
-                     
-                    // repintarNodo.Circulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r,Color.yellow);
+                      Label labelId = new Label();
+                        labelId.CreateId(Panelp, ArregloNodo, nodo.id);
+
                  }
                 
                 for (Linea linea : ArregloLinea) {
-                     linea.LineaId(Panelp.getGraphics(), linea.id1, linea.id2, ArregloNodo, r);
+                     linea.LineaId(Panelp.getGraphics(), linea.id1, linea.id2, ArregloNodo, r,ArregloLinea ,Panelp);
                      System.out.println("ID1: " + linea.id1 + "\t ID2: " + linea.id2);
                  }
                  
-//                System.out.println("ArregloJLabel.size(): [" + ArregloJLabel.size() + "]");
-//                Label label = new Label(); 
-//                for (int i = 0; i < ArregloJLabel.size(); i++) {
-//                   int aux = Integer.valueOf(ArregloNodo.get(i).getCminimo());
-//                   label.CreateLabel(Panelp, ArregloJLabel, aux, ArregloNodo.get(i).getX, ArregloNodo.get(i).getY, ArregloNodo.get(i).getCminimo(), ArregloNodo); 
-//                }
                 
                  System.out.println("Repintante liniesita!");
-//                for (Linea linea : ArregloLinea) {
-//                      repintarLinea.LineaId(Panelp.getGraphics(), linea.getInicio(), linea.getEnd(), ArregloNodo, r);
-//                }
+
                  Panelp.removeMouseMotionListener(this);
              }
              
          
          }; 
          Panelp.addMouseMotionListener(arrashack);
-         
-//         try {
-//            Robot robot = new Robot();
-//
-//            // Move mouse cursor to 200, 200
-//            // Press the mouse button #1.
-//            robot.mouseMove(300, 300);
-//
-//            // Scroll the screen up for a mouse with a wheel support.
-//            robot.mouseWheel(-100);
-//        } catch (AWTException e) {
-//            e.printStackTrace();
-//        }
-//         
-      }
+
+    }
     
     boolean callTextListenerOneTime = true;
     public void Edit(int Indicador, String TextLabel){
@@ -1261,18 +1223,28 @@ public class Ventana extends javax.swing.JFrame {
                 } 
                  Nodo repintarNodo = new Nodo();
                  
+                 int iterator = 0;
                  for (Nodo nodo : ArregloNodo) {
                     if(Integer.valueOf(nodo.Cmaximo) >= 100) {
-                            repintarNodo.Rectangulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r,Color.blue);
+                        repintarNodo.Rectangulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r,Color.cyan);
+                        ArregloNodo.get(iterator).setColor(Color.cyan);
                     }else if(Integer.valueOf(nodo.Cminimo) > 0){ 
                         repintarNodo.Circulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r,Color.red);
+                        ArregloNodo.get(iterator).setColor(Color.red);
                     }else{
                          repintarNodo.Circulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r,Color.yellow);
+                         ArregloNodo.get(iterator).setColor(Color.yellow);
                     }
+                     
+                    Label labelId = new Label();
+                    labelId.CreateId(Panelp, ArregloNodo, nodo.id);
+                     
+                     iterator++;
+                     
                     
                  }
                 for (Linea linea : ArregloLinea) {
-                     linea.LineaId(Panelp.getGraphics(), linea.id1, linea.id2, ArregloNodo, r);
+                     linea.LineaId(Panelp.getGraphics(), linea.id1, linea.id2, ArregloNodo, r,ArregloLinea,Panelp);
                      System.out.println("ID1: " + linea.id1 + "\t ID2: " + linea.id2);
                  }
                 System.out.println("ArregloJLabel.size(): [" + ArregloJLabel.size() + "]");

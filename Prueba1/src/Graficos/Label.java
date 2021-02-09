@@ -24,28 +24,79 @@ public class Label {
         if(text.equals("")){
             label.setText("[0,0]");
         }else{
-            
-        for (Nodo nodo : ArregloNodo) {
-            if(nodo.id == id){
-                
-                this.text = "["+nodo.Cminimo+"," + nodo.Cmaximo +"]";
-                label.setText(this.text);
-                break;
-            }
-            
+            for (Nodo nodo : ArregloNodo) {
+                if(nodo.id == id){
+                    this.text = "["+nodo.Cminimo+"," + nodo.Cmaximo +"]";
+                    label.setText(this.text);
+                    break;
+                }
         }
-        
         Panelp.add(label);
         label.setBackground(Color.white);
         label.setOpaque(true);
-        label.setBounds(x+6, y-20, 50,15);
+        label.setBounds(x-5, y-20, 50,15);
         }
+//        CreateId(Panelp, ArregloNodo, id);
     }
+    public void CreateId(JPanel Panelp, ArrayList<Nodo> ArregloNodo, int id){
+        Panelp.setLayout(null);
+        JLabel label = new JLabel("", SwingConstants.CENTER);
+        
+        label.setText(String.valueOf(id));
+  
+        Panelp.add(label);
+        
+         for (Nodo nodo : ArregloNodo) {
+                if(nodo.id == id){
+                    label.setBackground(nodo.color);
+                    label.setOpaque(true);
+                    label.setBounds(nodo.getX+4, nodo.getY+12, 30,15);
+                    break;
+                }
+         }
+    }
+            
+    public void LabelArista(JPanel Panelp, ArrayList<Linea>ArregloLinea,ArrayList<Nodo> ArregloNodo){
+        Panelp.setLayout(null);
+        text = "";
+        int x = 0;
+        int y = 0;
+        JLabel label = new JLabel("", SwingConstants.CENTER);
+        if(text.equals("")){
+            label.setText("[0,0,0]");
+        }
+        else {
+            
+        
+        for (Linea linea : ArregloLinea) {
+            this.text = "["+ linea.getInicio() + "," + linea.getEnd() + "," + linea.getId() +"]";
+            label.setText(this.text);
 
+            lililinea: for (Nodo nodoInicio : ArregloNodo) {
+                if(nodoInicio.id == linea.getInicio()){
+                    for (Nodo nodoFinal : ArregloNodo) {
+                        if(nodoFinal.id == linea.getEnd()){
+                            x = (nodoInicio.getX + nodoFinal.getX)/2;
+                            y = (nodoInicio.getY + nodoFinal.getY)/2;
+                            break lililinea;
+                        }
+                    }//Halla Nodo final
+                }
+            }//Halla Nodo Inicio
+            
+            label.setBounds(x, y, 50,15);
+            label.setBackground(Color.white);
+            label.setOpaque(true);
+            Panelp.add(label);
+
+        }
+    } 
+        
+    }       
     public int getId() {
         return id;
     }
-
+    
     public void setId(int id) {
         this.id = id;
        // text = String.valueOf(id);

@@ -24,6 +24,7 @@ public class Linea {
     int end = 0; 
     int id1 = 0; 
     int id2 = 0; 
+    int id = 0;
     public void Linea(Graphics g, int x, int y, int x1, int y1, ArrayList<Nodo> ArregloNodo, int r, ArrayList<Linea> ArregloLinea, Linea l, ArrayList<JLabel> ArregloJLabel, JPanel Panelp){
         //g.drawLine(x, y, x1, y2);
         //r = 100;
@@ -75,13 +76,16 @@ public class Linea {
                         //REpintando nodos
                         for(Nodo nodo: ArregloNodo){
                             if(Integer.valueOf(nodo.Cmaximo) >= 100) {
-                                nodo.Rectangulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r,Color.blue);
+                                nodo.Rectangulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r,Color.cyan);
                             }else if(Integer.valueOf(nodo.Cminimo) > 0){ 
                                 nodo.Circulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r,Color.red);
                             }else{
                                 nodo.Circulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r,Color.yellow);
                             }
                             //nodo.Circulo(g, nodo.getX, nodo.getY, r, r,Color.yellow);
+                             Label labelId = new Label();
+                             labelId.CreateId(Panelp, ArregloNodo, nodo.id);
+
                         }  
                         
                         //REpintando labels
@@ -98,7 +102,7 @@ public class Linea {
         }
     }
     
-    public void LineaId(Graphics g, int inicio, int end, ArrayList<Nodo> ArregloNodo, int r){
+    public void LineaId(Graphics g, int inicio, int end, ArrayList<Nodo> ArregloNodo, int r, ArrayList<Linea>ArregloLinea,JPanel Panelp){
         System.out.println("Creando la arista Uwu");
         System.out.println("");
         Graphics2D g2 = (Graphics2D) g;
@@ -111,6 +115,8 @@ public class Linea {
                     if(nodo2.id == id2){
                         
                         g2.draw(new Line2D.Float(nodo1.getX+21, nodo1.getY+21, nodo2.getX+21, nodo2.getY+21));                 
+                        Label labelLinea = new Label();
+                        labelLinea.LabelArista(Panelp, ArregloLinea, ArregloNodo);
                         break WeaNodo;
                     }
                     
@@ -118,11 +124,9 @@ public class Linea {
             }
             
         }
-        
-        
         for(Nodo nodo: ArregloNodo){
             if(Integer.valueOf(nodo.Cmaximo) >= 100) {
-                nodo.Rectangulo(g, nodo.getX, nodo.getY, r, r,Color.blue);
+                nodo.Rectangulo(g, nodo.getX, nodo.getY, r, r,Color.cyan);
              }else if(Integer.valueOf(nodo.Cminimo) > 0){ 
                 nodo.Circulo(g, nodo.getX, nodo.getY, r, r,Color.red);
              }else{
@@ -145,6 +149,14 @@ public class Linea {
 
     public void setEnd(int end) {
         this.end = end;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
     
     

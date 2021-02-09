@@ -1,8 +1,9 @@
-Node;355;32;1
-Node;352;220;2
-Node;510;29;3
-Line;1;2
-Line;1;3
-Label;45
-Label;2
-Label;87
+Node;211;123;1;0;100
+Node;606;135;2;1;25
+Node;483;295;3;0;40
+Node;353;114;4;0;5
+Node;299;313;5;1;50
+Line;1;5
+Line;1;4
+Line;4;3
+Line;3;2

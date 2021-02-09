@@ -5,6 +5,7 @@
  */
 package Graficos;
 
+import java.awt.Color;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -36,7 +37,15 @@ public class SaveModel {
              BufferedWriter output = new BufferedWriter(new FileWriter(file));
             
              for (Nodo nodo : ArregloNodo) {
-                output.write("Node;" + nodo.getX + ";" + nodo.getY + ";" + nodo.id + ";" + nodo.Cminimo + "\n");
+                int colorId = 0;
+                if(nodo.getColor() == Color.red){
+                   colorId = 3;
+                }else if(nodo.getColor() == Color.cyan){
+                    colorId = 2;
+                }else{
+                    colorId = 1;
+                }
+                output.write("Node;" + nodo.getX + ";" + nodo.getY + ";" + nodo.id + ";" + nodo.Cminimo + ";" + nodo.getCmaximo() + ";" + colorId+ "\n");
             }
             
             for (Linea linea : ArregloLinea) {
