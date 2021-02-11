@@ -20,7 +20,9 @@ public class Linea {
     int id1 = 0; 
     int id2 = 0; 
     int id = 0;
-    public void Linea(Graphics g, int x, int y, int x1, int y1, ArrayList<Nodo> ArregloNodo, int r, ArrayList<Linea> ArregloLinea, Linea l, ArrayList<JLabel> ArregloJLabel, JPanel Panelp){
+    int Flujo = 0;
+    int Lam = 0;
+    public int Linea(Graphics g, int x, int y, int x1, int y1, ArrayList<Nodo> ArregloNodo, int r, ArrayList<Linea> ArregloLinea, Linea l, ArrayList<JLabel> ArregloJLabel, JPanel Panelp, int contadorArista){
         //g.drawLine(x, y, x1, y2);
         //r = 100;
         int[] are_two_nodes = new int[2];
@@ -61,10 +63,17 @@ public class Linea {
                         
                         l.setInicio(id1);
                         l.setEnd(id2);
-                        
+                        l.setId(contadorArista+1);
+                        l.setFlujo(0);
+                        l.setLam(0);
                         ArregloLinea.add(l);
+                        System.out.println("LA WEA ID " + l.id);
                         
-                        System.out.println("Id1: " + id1 + " Id2: " + id2);
+                        contadorArista++;
+                        
+                        Label labelArista = new Label();
+                        labelArista.CrearLabelArista(ArregloLinea, ArregloNodo, Panelp);
+                        
                         System.out.println("Numero de lienas: " + ArregloLinea.size());
                         
                         //Repintando nodos
@@ -83,17 +92,24 @@ public class Linea {
                         }  
                         
                         //REpintando labels
-                        System.out.println("ArregloJLabel.size(): [" + ArregloJLabel.size() + "]");
                         Label label = new Label(); 
                         for (int j = 0; j < ArregloJLabel.size(); j++) {
                            int aux = Integer.valueOf(ArregloNodo.get(j).getCminimo());
                            label.CreateLabel(Panelp, ArregloJLabel, aux, ArregloNodo.get(j).getX, ArregloNodo.get(j).getY, "", ArregloNodo); 
                         }
+                        
+                        // System.out.println("ArregloJLabelArista.size() = " + ArregloJLabelArista.size());
+//                         for (JLabel labelA : ArregloJLabelArista) {
+//                             Panelp.add(labelA);
+//                         }
+                        
                     }
                     break;
                 } 
             }
         }
+        
+        return contadorArista;
     }
     
     public void LineaId(Graphics g, int inicio, int end, ArrayList<Nodo> ArregloNodo, int r, ArrayList<Linea>ArregloLinea,JPanel Panelp){
@@ -110,7 +126,6 @@ public class Linea {
                         
                         g2.draw(new Line2D.Float(nodo1.getX+21, nodo1.getY+21, nodo2.getX+21, nodo2.getY+21));                 
                         Label labelLinea = new Label();
-                        labelLinea.LabelArista(Panelp, ArregloLinea, ArregloNodo);
                         break WeaNodo;
                     }
                     
@@ -152,6 +167,21 @@ public class Linea {
     public void setId(int id) {
         this.id = id;
     }
-    
+
+    public int getFlujo() {
+        return Flujo;
+    }
+
+    public void setFlujo(int Flujo) {
+        this.Flujo = Flujo;
+    }
+
+    public int getLam() {
+        return Lam;
+    }
+
+    public void setLam(int Lam) {
+        this.Lam = Lam;
+    }
     
 }

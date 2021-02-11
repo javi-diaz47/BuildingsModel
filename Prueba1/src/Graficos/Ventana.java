@@ -23,21 +23,23 @@ import javax.swing.SwingUtilities;
 public class Ventana extends javax.swing.JFrame {
 //Atributos generales
     //DEfinicion de ArrayList
-    ArrayList<Nodo> ArregloNodo = new ArrayList();
-    ArrayList<Linea> ArregloLinea = new ArrayList();
-    ArrayList<JLabel> ArregloJLabel = new ArrayList();
+    public ArrayList<Nodo> ArregloNodo = new ArrayList();
+    public ArrayList<Linea> ArregloLinea = new ArrayList();
+    public ArrayList<JLabel> ArregloJLabel = new ArrayList();
+    //public ArrayList<JLabel> ArregloJLabelArista = new ArrayList();
 
-    int [] x = new int[100]; 
-    int [] y = new int[100]; 
-    int r = 40; 
-    int indicador = 0; 
-    int contador = 1; 
-    int ThisLabel = 0;
-    boolean Nodob = false; 
-    boolean Moverb = false; 
-    boolean Lineab = false; 
-    boolean delete = false; 
-    boolean Editar = false;
+    public int [] x = new int[100]; 
+    public int [] y = new int[100]; 
+    public int r = 40; 
+    public int indicador = 0; 
+    public int contador = 1; 
+    public int ThisLabel = 0;
+    public boolean Nodob = false; 
+    public boolean Moverb = false; 
+    public boolean Lineab = false; 
+    public boolean delete = false; 
+    public boolean Editar = false;
+    public int contadorArista = 0;
     
     
     public Ventana() {
@@ -69,6 +71,16 @@ public class Ventana extends javax.swing.JFrame {
         Update = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         Cmaximo = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        IdArista = new javax.swing.JTextField();
+        FlujoArista = new javax.swing.JTextField();
+        LamArista = new javax.swing.JTextField();
+        UpdateArista = new javax.swing.JButton();
+        EditarArista = new javax.swing.JButton();
         mostrar = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -144,7 +156,7 @@ public class Ventana extends javax.swing.JFrame {
             }
         });
 
-        Update.setText("Update");
+        Update.setText("Actualizar nodo");
         Update.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 UpdateActionPerformed(evt);
@@ -153,32 +165,97 @@ public class Ventana extends javax.swing.JFrame {
 
         jLabel1.setText("C Maxima");
 
+        jLabel2.setText("ID");
+
+        jLabel3.setText("Flujo");
+
+        jLabel4.setText("Lambda");
+
+        jLabel5.setText("Aristas");
+
+        jLabel6.setText("Nodos");
+
+        IdArista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                IdAristaActionPerformed(evt);
+            }
+        });
+
+        FlujoArista.setEnabled(false);
+
+        LamArista.setEnabled(false);
+
+        UpdateArista.setText("Actualizar arista");
+        UpdateArista.setEnabled(false);
+        UpdateArista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UpdateAristaActionPerformed(evt);
+            }
+        });
+
+        EditarArista.setText("Editar");
+        EditarArista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EditarAristaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout PanelLineaLayout = new javax.swing.GroupLayout(PanelLinea);
         PanelLinea.setLayout(PanelLineaLayout);
         PanelLineaLayout.setHorizontalGroup(
             PanelLineaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelLineaLayout.createSequentialGroup()
-                .addGap(0, 64, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(57, 57, 57))
-            .addGroup(PanelLineaLayout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addGroup(PanelLineaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Update, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelLineaLayout.createSequentialGroup()
-                        .addGroup(PanelLineaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(Id, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(PanelLineaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(Text, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
-                            .addComponent(Cmaximo))))
+                .addGroup(PanelLineaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(PanelLineaLayout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addGroup(PanelLineaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2))
+                        .addGap(18, 18, 18)
+                        .addGroup(PanelLineaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(PanelLineaLayout.createSequentialGroup()
+                                .addComponent(IdArista, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(EditarArista, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE))
+                            .addComponent(LamArista)
+                            .addComponent(FlujoArista)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, PanelLineaLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(PanelLineaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelLineaLayout.createSequentialGroup()
+                                .addGroup(PanelLineaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(Id, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(PanelLineaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(Text, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
+                                    .addComponent(Cmaximo)
+                                    .addGroup(PanelLineaLayout.createSequentialGroup()
+                                        .addGap(8, 8, 8)
+                                        .addComponent(jLabel6)))))))
                 .addGap(15, 15, 15))
+            .addGroup(PanelLineaLayout.createSequentialGroup()
+                .addGroup(PanelLineaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PanelLineaLayout.createSequentialGroup()
+                        .addGap(117, 117, 117)
+                        .addComponent(jLabel5))
+                    .addGroup(PanelLineaLayout.createSequentialGroup()
+                        .addGap(67, 67, 67)
+                        .addComponent(Update, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelLineaLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(UpdateArista, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(57, 57, 57))
         );
         PanelLineaLayout.setVerticalGroup(
             PanelLineaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelLineaLayout.createSequentialGroup()
-                .addGap(37, 37, 37)
+                .addGap(9, 9, 9)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(PanelLineaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Text, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Id))
@@ -186,11 +263,28 @@ public class Ventana extends javax.swing.JFrame {
                 .addGroup(PanelLineaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(Cmaximo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(Update)
-                .addGap(59, 59, 59)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(82, 82, 82))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addComponent(jLabel5)
+                .addGap(4, 4, 4)
+                .addGroup(PanelLineaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(IdArista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(EditarArista))
+                .addGap(18, 18, 18)
+                .addGroup(PanelLineaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(FlujoArista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20)
+                .addGroup(PanelLineaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(LamArista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(UpdateArista)
+                .addGap(30, 30, 30)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18))
         );
 
         mostrar.setText("Mostrar");
@@ -376,8 +470,9 @@ public class Ventana extends javax.swing.JFrame {
 
     private void SaveModelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveModelActionPerformed
         // TODO add your handling code here:
-        SaveModel save = new SaveModel(); 
-        save.Save(this.ArregloNodo, this.contador, this.ArregloLinea, this.ArregloJLabel);
+        SaveModel save = new SaveModel();
+        
+        save.Save(this.ArregloNodo, this.contador, ArregloLinea, ArregloJLabel);
     }//GEN-LAST:event_SaveModelActionPerformed
 
     private void NewModelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewModelActionPerformed
@@ -472,6 +567,11 @@ public class Ventana extends javax.swing.JFrame {
             System.out.println("TextLabel = " + TextLabel);
             Panelp.removeAll();
             Panelp.repaint();
+            
+            Label LabelA =  new Label();
+            //ArregloJLabelArista = LabelA.LabelArista(ArregloLinea, ArregloNodo, Panelp);
+            LabelA.LabelArista(ArregloLinea, ArregloNodo, Panelp);
+            
             hack_3(TextLabel, CmaximoText);
         }
     }//GEN-LAST:event_UpdateActionPerformed
@@ -493,6 +593,65 @@ public class Ventana extends javax.swing.JFrame {
         Edit.setEnabled(false);
         Update.setEnabled(false);
     }//GEN-LAST:event_EditActionPerformed
+
+    private void UpdateAristaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateAristaActionPerformed
+        // TODO add your handling code here:
+        EditarArista.setEnabled(false);
+        if(IsNumeric(FlujoArista.getText()) && IsNumeric(LamArista.getText())){
+            if(IsNumeric(IdArista.getText())){
+                int id = Integer.valueOf(IdArista.getText());
+                for (Linea linea : ArregloLinea) {
+                    if(linea.getId() == id){
+                        linea.setFlujo(Integer.valueOf(FlujoArista.getText()));
+                        linea.setLam(Integer.valueOf(LamArista.getText()));
+                        FlujoArista.setEnabled(false);
+                        LamArista.setEnabled(false);
+                        UpdateArista.setEnabled(false);
+                        EditarArista.setEnabled(true);
+                        IdArista.setEnabled(true);
+                        break;
+                    }
+                        
+                }
+            }
+        }
+    }//GEN-LAST:event_UpdateAristaActionPerformed
+
+    private void IdAristaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IdAristaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_IdAristaActionPerformed
+
+    private void EditarAristaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditarAristaActionPerformed
+        // TODO add your handling code here:
+        boolean aux = false;
+        if(IsNumeric(IdArista.getText())){
+            int id = Integer.valueOf(IdArista.getText());
+            for (Linea linea : ArregloLinea) {
+                if(linea.getId() == id){
+                    aux = true;
+                    FlujoArista.setEnabled(true);
+                    LamArista.setEnabled(true);
+                    UpdateArista.setEnabled(true);
+                    FlujoArista.setText(String.valueOf(linea.getFlujo()));
+                    LamArista.setText(String.valueOf(linea.getLam()));
+                    IdArista.setEnabled(false);
+                    EditarArista.setEnabled(false);
+                    break;
+                }
+            }
+            
+        }
+        if(!aux){
+            alert("Lo sentimos, pero esa arista no ha sido creada");
+            FlujoArista.setText("");
+            LamArista.setText("");
+            FlujoArista.setEnabled(false);
+            LamArista.setEnabled(false);
+            UpdateArista.setEnabled(false);
+            EditarArista.setEnabled(true);
+        }
+        
+    }//GEN-LAST:event_EditarAristaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -534,8 +693,12 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JMenuItem CloseApp;
     private javax.swing.JTextField Cmaximo;
     private javax.swing.JButton Edit;
+    private javax.swing.JButton EditarArista;
     private javax.swing.JButton Eliminar;
+    private javax.swing.JTextField FlujoArista;
     private javax.swing.JLabel Id;
+    private javax.swing.JTextField IdArista;
+    private javax.swing.JTextField LamArista;
     private javax.swing.JButton Linea;
     private javax.swing.JButton Mover;
     private javax.swing.JMenuItem NewModel;
@@ -547,8 +710,14 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JTextField Text;
     private javax.swing.JTextArea Texto;
     private javax.swing.JButton Update;
+    private javax.swing.JButton UpdateArista;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
@@ -700,7 +869,8 @@ public class Ventana extends javax.swing.JFrame {
 
                         //repintarNodo.Circulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r ,Color.yellow);
                     }
-                  System.out.println("ArregloJLabel.size(): [" + ArregloJLabel.size() + "]");
+                    
+                   System.out.println("ArregloJLabel.size(): [" + ArregloJLabel.size() + "]");
                    Label label = new Label(); 
 
                    for (int i = 0; i < ArregloJLabel.size(); i++) {
@@ -748,6 +918,21 @@ public class Ventana extends javax.swing.JFrame {
                    for (int i = 0; i < ArregloJLabel.size(); i++) {
                       label.CreateLabel(Panelp, ArregloJLabel, ArregloNodo.get(i).id, ArregloNodo.get(i).getX, ArregloNodo.get(i).getY, ArregloNodo.get(i).getCminimo(), ArregloNodo); 
                    }
+                    
+                    Label LabelA =  new Label();
+                    //ArregloJLabelArista = LabelA.LabelArista(ArregloLinea, ArregloNodo, Panelp);
+                    LabelA.LabelArista(ArregloLinea, ArregloNodo, Panelp);
+
+
+//                    for (int i = 0; i < ArregloJLabelArista.size(); i++) {
+//                        ArregloJLabelArista.set(i, LabelA.LabelArista(ArregloLinea, ArregloNodo, Panelp));
+//                    }
+                    
+//                    for (JLabel jLabel : ArregloJLabelArista) {
+//                         Panelp.add(jLabel);
+//                     }
+//                
+                    
                    hack_2();
                 }
              }
@@ -792,8 +977,17 @@ public class Ventana extends javax.swing.JFrame {
                  LlegadaX = e.getX(); 
                  LlegadaY = e.getY();
                  Linea l = new Linea(); 
-                 l.Linea(Panelp.getGraphics(), inicioX, inicioY, LlegadaX, LlegadaY, ArregloNodo, r, ArregloLinea, l, ArregloJLabel, Panelp);
-                 
+                 contadorArista = l.Linea(Panelp.getGraphics(), inicioX, inicioY, LlegadaX, LlegadaY, ArregloNodo, r, ArregloLinea, l, ArregloJLabel, Panelp, contadorArista);
+
+//                 Label labelArista = new Label();
+//                ArregloJLabelArista.add(labelArista.LabelArista(ArregloLinea, ArregloNodo));
+                //System.out.println("ArregloJLabelArista.size() = " + ArregloJLabelArista.size());
+//                 for (JLabel label : ArregloJLabelArista) {
+//                     Panelp.add(label);
+//                 }
+                //System.out.println("ArregloJLabelArista.size() = " + ArregloJLabelArista.size());
+                hack_2();
+
              }
 
              @Override
@@ -824,16 +1018,15 @@ public class Ventana extends javax.swing.JFrame {
              String[] properties = data.split(";");
              
              if(properties[0].equals("Node")){
-                
-                
+    
                 int getX= Integer.parseInt(properties[1]);
                 int getY = Integer.parseInt(properties[2]);
                 int Id = Integer.parseInt(properties[3]);
                 String TextNodoLoad = properties[4];
                 String CmaximaLoad = properties[5];
                 int  ColorId= Integer.parseInt(properties[6]);
-                x[cont] = Integer.parseInt(properties[1]);
-                y[cont] = Integer.parseInt(properties[2]);
+//                x[cont] = Integer.parseInt(properties[1]);
+//                y[cont] = Integer.parseInt(properties[2]);
                
                 //Nodo
                 Nodo n = new Nodo(); 
@@ -867,8 +1060,6 @@ public class Ventana extends javax.swing.JFrame {
                 for (Nodo nodo : ArregloNodo) {
                     System.out.println("getX: " + nodo.getX + " getY: " + nodo.getY);
                 }
-                
-                
                 System.out.println("Node Done!");
                 cont += 1; 
              }
@@ -876,8 +1067,9 @@ public class Ventana extends javax.swing.JFrame {
             if(properties[0].equals("Line")){
                 int getId1 = Integer.parseInt(properties[1]);
                 int getId2 = Integer.parseInt(properties[2]);
-         
-               
+                int getFlujo = Integer.parseInt(properties[3]);
+                int getLam = Integer.parseInt(properties[4]);
+                
                 System.out.println("Id1: " + getId1);
                 System.out.println("Id2: " + getId2);
                 Linea l = new Linea(); 
@@ -885,7 +1077,9 @@ public class Ventana extends javax.swing.JFrame {
                 l.setEnd(getId2);
                 l.id1 = getId1;
                 l.id2 = getId2;
-                
+                l.id = ArregloLinea.size() + 1;
+                l.setFlujo(getFlujo);
+                l.setLam(getLam);
                 ArregloLinea.add(l);
                 
                 for (Nodo nodo : ArregloNodo) {
@@ -904,6 +1098,8 @@ public class Ventana extends javax.swing.JFrame {
             for (Linea linea : ArregloLinea) {
                 linea.LineaId(Panelp.getGraphics(), linea.id1, linea.id2, ArregloNodo, r,ArregloLinea ,Panelp);
                 System.out.println("ID1: " + linea.id1 + "\t ID2: " + linea.id2);
+                Label LabelA =  new Label();
+                LabelA.LabelArista(ArregloLinea, ArregloNodo, Panelp);
             }
             
             
@@ -916,10 +1112,15 @@ public class Ventana extends javax.swing.JFrame {
           
           } //While
             
+            Label LabelA =  new Label();
+            LabelA.CrearLabelArista(ArregloLinea, ArregloNodo, Panelp);
+            hack();
+//            Label LabelA =  new Label();
+//            LabelA.LabelArista(ArregloLinea, ArregloNodo, Panelp);
+                        
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
         }
-          
      }
      
      public void DeleteNode(){
@@ -966,6 +1167,9 @@ public class Ventana extends javax.swing.JFrame {
                         Panelp.removeAll();
                         Panelp.repaint();
                                
+                        Label LabelA =  new Label();
+                       // ArregloJLabelArista = LabelA.LabelArista(ArregloLinea, ArregloNodo, Panelp);
+                        LabelA.LabelArista(ArregloLinea, ArregloNodo, Panelp);
                         hack();
                         
                     }
@@ -1011,25 +1215,26 @@ public class Ventana extends javax.swing.JFrame {
                     }else{
                          repintarNodo.Circulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r,Color.yellow);
                     }
-                    
                     Label labelId = new Label();
                     labelId.CreateId(Panelp, ArregloNodo, nodo.id);
-
                  }
                 
+                
+                 
                 for (Linea linea : ArregloLinea) {
                      linea.LineaId(Panelp.getGraphics(), linea.id1, linea.id2, ArregloNodo, r,ArregloLinea ,Panelp);
-                     System.out.println("ID1: " + linea.id1 + "\t ID2: " + linea.id2);
                  }
+                
+               
                  
-                System.out.println("ArregloJLabel.size(): [" + ArregloJLabel.size() + "]");
                 Label label = new Label(); 
                 for (int i = 0; i < ArregloJLabel.size(); i++) {
                    int aux = Integer.valueOf(ArregloNodo.get(i).getCminimo());
                    label.CreateLabel(Panelp, ArregloJLabel, ArregloNodo.get(i).getId(), ArregloNodo.get(i).getX, ArregloNodo.get(i).getY, ArregloNodo.get(i).getCminimo(), ArregloNodo); 
                 }
-                 System.out.println("Repintante liniesita!");
-                 Panelp.removeMouseMotionListener(this);
+                
+            
+                Panelp.removeMouseMotionListener(this);
              }
              
          
@@ -1089,8 +1294,9 @@ public class Ventana extends javax.swing.JFrame {
                  }
                  
                 
+              
+                
                  System.out.println("Repintante liniesita!");
-
                  Panelp.removeMouseMotionListener(this);
              }
              
@@ -1196,6 +1402,16 @@ public class Ventana extends javax.swing.JFrame {
         return resultado;
     }
     
+    public void EditArista(){
+        IdArista.setEnabled(true);
+        int id = Integer.valueOf(IdArista.getText());
+        if(ArregloLinea.get(id).getId() == id){
+            
+        }
+    }
+    
+    
+    
     
     public void hack_3(String TextLabel, String CmaximoText){
          MouseMotionListener arrashack = new MouseMotionListener() {
@@ -1219,7 +1435,7 @@ public class Ventana extends javax.swing.JFrame {
                         ArregloNodo.get(iterator).setColor(Color.red);
                     }else{
                          repintarNodo.Circulo(Panelp.getGraphics(), nodo.getX, nodo.getY, r, r,Color.yellow);
-                         ArregloNodo.get(iterator).setColor(Color.yellow);
+                        ArregloNodo.get(iterator).setColor(Color.yellow);
                     }
                      
                     Label labelId = new Label();
@@ -1227,7 +1443,7 @@ public class Ventana extends javax.swing.JFrame {
                      
                      iterator++;
                      
-                    
+                   
                  }
                 for (Linea linea : ArregloLinea) {
                      linea.LineaId(Panelp.getGraphics(), linea.id1, linea.id2, ArregloNodo, r,ArregloLinea,Panelp);

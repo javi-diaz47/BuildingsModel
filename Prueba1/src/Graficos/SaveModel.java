@@ -44,7 +44,7 @@ public class SaveModel {
             }
             
             for (Linea linea : ArregloLinea) {
-                output.write("Line;" + linea.inicio + ";" + linea.end + "\n");
+                output.write("Line;" + linea.inicio + ";" + linea.end + ";" + linea.getFlujo() + ";" + linea.getLam() +"\n");
             }
            
              output.close();

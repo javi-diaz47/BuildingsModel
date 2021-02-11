@@ -55,19 +55,13 @@ public class Label {
          }
     }
             
-    public void LabelArista(JPanel Panelp, ArrayList<Linea>ArregloLinea,ArrayList<Nodo> ArregloNodo){
-        Panelp.setLayout(null);
+    public void LabelArista(ArrayList<Linea>ArregloLinea,ArrayList<Nodo> ArregloNodo, JPanel Panelp){
         text = "";
         int x = 0;
         int y = 0;
-        JLabel label = new JLabel("", SwingConstants.CENTER);
-        if(text.equals("")){
-            label.setText("[0,0,0]");
-        }
-        else {
-            
         
         for (Linea linea : ArregloLinea) {
+            JLabel label = new JLabel("", SwingConstants.CENTER);
             this.text = "["+ linea.getInicio() + "," + linea.getEnd() + "," + linea.getId() +"]";
             label.setText(this.text);
 
@@ -82,16 +76,48 @@ public class Label {
                     }//Halla Nodo final
                 }
             }//Halla Nodo Inicio
-            
             label.setBounds(x, y, 50,15);
             label.setBackground(Color.white);
             label.setOpaque(true);
+            
             Panelp.add(label);
-
+            
         }
-    } 
         
-    }       
+    }    
+    
+    
+     public void CrearLabelArista(ArrayList<Linea>ArregloLinea,ArrayList<Nodo> ArregloNodo, JPanel Panelp){
+        text = "";
+        int x = 0;
+        int y = 0;
+        
+        ArrayList<JLabel> ArregloJLabelArista = new ArrayList();
+        JLabel label = new JLabel("", SwingConstants.CENTER);
+       
+        for (Linea linea : ArregloLinea) {
+            this.text = "["+ linea.getInicio() + "," + linea.getEnd() + "," + linea.getId() +"]";
+            label.setText(this.text);
+            lililinea: for (Nodo nodoInicio : ArregloNodo) {
+                if(nodoInicio.id == linea.getInicio()){
+                    for (Nodo nodoFinal : ArregloNodo) {
+                        if(nodoFinal.id == linea.getEnd()){
+                            x = (nodoInicio.getX + nodoFinal.getX)/2;
+                            y = (nodoInicio.getY + nodoFinal.getY)/2;
+                            break lililinea;
+                        }
+                    }//Halla Nodo final
+                }
+            }//Halla Nodo Inicio
+            label.setBounds(x, y, 50,15);
+            label.setBackground(Color.white);
+            label.setOpaque(true);
+            ArregloJLabelArista.add(label);
+            Panelp.add(label);
+        }
+        
+    }     
+    
     public int getId() {
         return id;
     }
